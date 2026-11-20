@@ -1,0 +1,527 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-heading: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+    /* Jadesta Kemenpar (grdeen.css) Color Tokens */
+    --color-grdeen-base: #1a9120;
+    --color-grdeen-green: #1f9a26;
+    --color-grdeen-text: #626f62;
+    --color-grdeen-text-dark: #07370a;
+    --color-grdeen-text-dark2: #0e150e;
+    --color-grdeen-gray: #f6f7f2;
+    --color-grdeen-gray2: #f1f4f1;
+    --color-grdeen-mint: #eff6f0;
+    --color-grdeen-card-mint: #edf5ee;
+    --color-grdeen-white2: #f2f4ec;
+    --color-grdeen-white3: #faf8ec;
+    --color-grdeen-white4: #ecf2df;
+    --color-grdeen-black: #172000;
+    --color-grdeen-black2: #4f5345;
+    --color-grdeen-black4: #0d190e;
+    --color-grdeen-helpline: #031c05;
+    --color-grdeen-border: #e7e7e7;
+}
+
+:root {
+    --grdeen-font: "Inter", sans-serif;
+    --grdeen-heading-font: "DM Sans", sans-serif;
+    --grdeen-text: #626f62;
+    --grdeen-text-dark: #07370a;
+    --grdeen-text-dark2: #0e150e;
+    --grdeen-base: #1a9120;
+    --grdeen-green: #1f9a26;
+    --grdeen-gray: #f6f7f2;
+    --grdeen-gray2: #f1f4f1;
+    --grdeen-white: #ffffff;
+    --grdeen-white2: #f2f4ec;
+    --grdeen-white3: #faf8ec;
+    --grdeen-white4: #ecf2df;
+    --grdeen-black: #172000;
+    --grdeen-black2: #4f5345;
+    --grdeen-black3: #545454;
+    --grdeen-black4: #0d190e;
+    --grdeen-border-color: #e7e7e7;
+}
+
+@layer base {
+    body {
+        font-family: var(--grdeen-font);
+        color: var(--grdeen-text);
+        background-color: #ffffff;
+    }
+
+    h1, h2, h3, h4, h5, h6, .font-heading {
+        font-family: var(--grdeen-heading-font);
+        color: var(--grdeen-text-dark);
+    }
+}
+
+::selection {
+    background-color: #ecf2df;
+    color: #07370a;
+}
+
+/* Leaflet Overrides matching Jadesta */
+.leaflet-container {
+    font-family: var(--grdeen-font) !important;
+    z-index: 10;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 10px !important;
+    padding: 4px !important;
+    box-shadow: 0 3px 18px rgba(23, 32, 0, 0.12) !important;
+    border: 1px solid #e7e7e7 !important;
+}
+
+.leaflet-popup-content {
+    margin: 12px 14px !important;
+    line-height: 1.5 !important;
+}
+
+/* ==========================================================================
+   Jadesta Kemenpar Official Component Styles (grdeen.css adaptation)
+   ========================================================================== */
+
+/* Signature Jadesta Button (.grdeen-btn) with +10% smoother rounded corners */
+.grdeen-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    vertical-align: middle;
+    border: none;
+    outline: none;
+    background-color: var(--grdeen-base, #1a9120);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--grdeen-font, "Inter", sans-serif);
+    padding: 13px 28px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+}
+.grdeen-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -16px;
+    right: 0;
+    bottom: 0;
+    width: 130%;
+    height: 0%;
+    margin: auto;
+    transform: rotate(-45deg);
+    background-color: var(--grdeen-black, #172000);
+    transition: 500ms cubic-bezier(0.6, 1.5, 0.4, 0.7);
+    z-index: 1;
+}
+.grdeen-btn:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+.grdeen-btn:hover::before {
+    height: 450%;
+}
+.grdeen-btn > * {
+    position: relative;
+    z-index: 2;
+}
+
+.grdeen-btn--dark {
+    background-color: var(--grdeen-text-dark, #07370a);
+}
+.grdeen-btn--dark::before {
+    background-color: var(--grdeen-base, #1a9120);
+}
+
+.grdeen-btn--active {
+    background-color: var(--grdeen-black, #172000) !important;
+}
+
+.grdeen-btn--outline {
+    background-color: #ffffff;
+    color: var(--grdeen-text-dark, #07370a);
+    border: 1px solid var(--grdeen-base, #1a9120);
+}
+.grdeen-btn--outline:hover {
+    color: #ffffff;
+}
+
+/* Signature Jadesta Section Title (.sec-title) */
+.sec-title__tagline-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+.sec-title__chevron {
+    display: inline-flex;
+    color: var(--grdeen-base, #1a9120);
+    width: 14px;
+    height: 12px;
+    animation: taglineShift 1.2s ease-in-out infinite alternate;
+}
+@keyframes taglineShift {
+    from { transform: translateX(-2px); }
+    to { transform: translateX(4px); }
+}
+.sec-title__tagline {
+    margin: 0;
+    color: var(--grdeen-base, #1a9120);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.sec-title__title {
+    margin: 4px 0 0 0;
+    color: var(--grdeen-text-dark, #07370a);
+    font-family: var(--grdeen-heading-font, "DM Sans", sans-serif);
+    font-weight: 700;
+    font-size: clamp(26px, 3vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+/* Signature Jadesta Attraction / Project Overlay Card (.project-one__item) */
+.jadesta-project-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 3px 18px rgba(23, 32, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+.jadesta-project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(7, 55, 10, 0.11);
+}
+.jadesta-project-card__image {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+.jadesta-project-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.jadesta-project-card:hover .jadesta-project-card__image img {
+    transform: scale(1.07);
+}
+.jadesta-project-card__overlay {
+    position: relative;
+    margin-top: -64px;
+    margin-bottom: 20px;
+    z-index: 2;
+    width: calc(100% - 28px);
+    background-color: var(--grdeen-white3, #faf8ec);
+    padding: 20px 68px 18px 24px;
+    border-radius: 0 42px 42px 0;
+    box-shadow: 0 6px 20px rgba(7, 55, 10, 0.09);
+    transition: all 0.4s ease;
+}
+.jadesta-project-card__tag {
+    color: var(--grdeen-base, #1a9120);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+}
+.jadesta-project-card__title {
+    color: var(--grdeen-text-dark, #07370a);
+    font-family: var(--grdeen-heading-font, "DM Sans", sans-serif);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.25;
+    margin: 0;
+}
+.jadesta-project-card__title:hover {
+    color: var(--grdeen-base, #1a9120);
+}
+.jadesta-project-card__arrow {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    right: 14px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    background-color: var(--grdeen-base, #1a9120);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+}
+.jadesta-project-card:hover .jadesta-project-card__arrow {
+    background-color: var(--grdeen-text-dark, #07370a);
+    transform: translateX(3px);
+}
+
+/* Signature Jadesta Classification / Process Card (.work-process-one__col) */
+.jadesta-process-card {
+    position: relative;
+    background-color: var(--grdeen-white2, #f2f4ec);
+    border-radius: 10px;
+    padding: 36px 22px 28px 22px;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid rgba(26, 145, 32, 0.12);
+}
+.jadesta-process-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(7, 55, 10, 0.1);
+}
+.jadesta-process-card__circle {
+    width: 132px;
+    height: 132px;
+    border: 2px dashed var(--grdeen-green, #1f9a26);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 22px auto;
+    position: relative;
+    transition: transform 0.5s ease;
+}
+.jadesta-process-card:hover .jadesta-process-card__circle {
+    transform: scale(1.04);
+}
+.jadesta-process-card__number {
+    position: absolute;
+    bottom: 20px;
+    left: -18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--grdeen-green, #1f9a26);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.jadesta-process-card__icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background-color: var(--grdeen-text-dark, #07370a);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 7px #ffffff;
+    transition: all 0.4s ease;
+}
+.jadesta-process-card:hover .jadesta-process-card__icon {
+    background-color: var(--grdeen-base, #1a9120);
+}
+
+/* Signature Jadesta Directory Listing Card (.listing-item) */
+.jadesta-listing-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #07370a;
+    height: 290px;
+    display: block;
+}
+.jadesta-listing-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+.jadesta-listing-card:hover img {
+    transform: scale(1.06);
+}
+.jadesta-listing-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7, 55, 10, 0.92) 0%, rgba(7, 55, 10, 0.35) 55%, rgba(7, 55, 10, 0.05) 100%);
+    z-index: 1;
+}
+.jadesta-listing-card__badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    background-color: #1a9120;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+}
+.jadesta-listing-card__content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 2;
+    color: #ffffff;
+}
+.jadesta-listing-card__tag {
+    display: inline-block;
+    background-color: #1a9120;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+/* Signature Jadesta Boxed Sidebar Widget (.boxed-widget) */
+.jadesta-boxed-widget {
+    background-color: #f9faf7;
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    padding: 24px;
+}
+.jadesta-boxed-widget__title {
+    font-family: var(--grdeen-heading-font, "DM Sans", sans-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--grdeen-text-dark, #07370a);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+/* Signature Jadesta Verified Badge (.verified-badge) */
+.jadesta-verified-badge {
+    background-color: #1a9120;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Signature Jadesta Blog Card (.blog-card--two) */
+.jadesta-blog-card {
+    background-color: #edf5ee;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.jadesta-blog-card:hover {
+    box-shadow: 0 12px 32px 0 rgba(7, 55, 10, 0.1);
+    transform: translateY(-4px);
+}
+.jadesta-blog-card__date {
+    display: inline-block;
+    background-color: var(--grdeen-base, #1a9120);
+    color: #ffffff;
+    border: 1px dashed #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+}
+
+/* Form Inputs matching Jadesta */
+@layer components {
+    .input-jadesta {
+        background-color: #ffffff;
+        color: var(--grdeen-text-dark, #07370a);
+        border: 1px solid #d4dcd4;
+        border-radius: 8px;
+        height: 46px;
+        padding: 0 14px;
+        font-size: 14px;
+        transition: all 0.15s ease;
+    }
+    .input-jadesta:focus {
+        outline: none;
+        border-color: var(--grdeen-base, #1a9120);
+        box-shadow: 0 0 0 3px rgba(26, 145, 32, 0.15);
+    }
+}
+
+/* ==========================================================================
+   Scroll Reveal Animations (IntersectionObserver driven, reduced-motion safe)
+   ========================================================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-28px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+.reveal-right {
+    opacity: 0;
+    transform: translateX(28px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.95) translateY(16px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible,
+.reveal-scale.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+.reveal-delay-100 { transition-delay: 100ms; }
+.reveal-delay-200 { transition-delay: 200ms; }
+.reveal-delay-300 { transition-delay: 300ms; }
+.reveal-delay-400 { transition-delay: 400ms; }
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-left, .reveal-right, .reveal-scale {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    .sec-title__chevron {
+        animation: none !important;
+    }
+}

@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class VillageProfile extends Model
+{
+    use HasFactory;
+
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'mission' => 'array',
+        'default_latitude' => 'float',
+        'default_longitude' => 'float',
+    ];
+}
