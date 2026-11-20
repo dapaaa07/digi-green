@@ -90,35 +90,23 @@
                         @enderror
                     </div>
 
-                    <!-- Titik Terdekat (Opsional: Plang QR / Destinasi) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="destination_id" class="block text-xs font-bold uppercase tracking-wider text-[#07370a] mb-2">
-                                Area Atraksi Wisata (Opsional)
-                            </label>
-                            <select name="destination_id" id="destination_id" class="input-jadesta w-full">
-                                <option value="">-- Pilih Jika di Area Atraksi Wisata --</option>
-                                @foreach($destinations as $dest)
-                                    <option value="{{ $dest->id }}" {{ (old('destination_id') == $dest->id || (isset($selectedDestination) && $selectedDestination->id == $dest->id)) ? 'selected' : '' }}>
-                                        {{ $dest->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    @if(isset($selectedQr))
+                        <input type="hidden" name="qr_point_id" value="{{ $selectedQr->id }}">
+                    @endif
 
-                        <div>
-                            <label for="qr_point_id" class="block text-xs font-bold uppercase tracking-wider text-[#07370a] mb-2">
-                                Titik Plang Bambu QR (Opsional)
-                            </label>
-                            <select name="qr_point_id" id="qr_point_id" class="input-jadesta w-full">
-                                <option value="">-- Pilih Jika Dekat Plang QR --</option>
-                                @foreach($qrPoints as $qr)
-                                    <option value="{{ $qr->id }}" {{ (old('qr_point_id') == $qr->id || (isset($selectedQr) && $selectedQr->id == $qr->id)) ? 'selected' : '' }}>
-                                        {{ $qr->location_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <!-- Kawasan Wisata (Opsional) -->
+                    <div>
+                        <label for="destination_id" class="block text-xs font-bold uppercase tracking-wider text-[#07370a] mb-2">
+                            Kawasan Wisata (Opsional)
+                        </label>
+                        <select name="destination_id" id="destination_id" class="input-jadesta w-full">
+                            <option value="">-- Pilih Kawasan Wisata (Opsional) --</option>
+                            @foreach($destinations as $dest)
+                                <option value="{{ $dest->id }}" {{ (old('destination_id') == $dest->id || (isset($selectedDestination) && $selectedDestination->id == $dest->id)) ? 'selected' : '' }}>
+                                    {{ $dest->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <!-- Lokasi Spesifik / Patokan -->

@@ -6,7 +6,7 @@
     <title>@yield('title', 'Jejaring Desa Wisata Cupunagara | Ekowisata Alam & Sentra Kopi Subang')</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo/logo-digi-green-pin-icon-transparent.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo/logo-digi-green-pin-icon-transparent.png') }}">
-    <meta name="description" content="@yield('meta_description', 'Portal Jejaring Desa Wisata Cupunagara, Kecamatan Cisalak, Kabupaten Subang. Temukan informasi atraksi wisata alam, produk kopi Canggah, peta sebaran, dan gerakan gotong royong kebersihan desa.')">
+    <meta name="description" content="@yield('meta_description', 'Portal Jejaring Desa Wisata Cupunagara, Kecamatan Cisalak, Kabupaten Subang. Temukan informasi wisata alam, produk kopi Canggah, peta sebaran, dan gerakan gotong royong kebersihan desa.')">
     
     <!-- Google Fonts: DM Sans (Headings ala Jadesta Kemenpar) + Inter (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

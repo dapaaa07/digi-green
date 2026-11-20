@@ -102,4 +102,86 @@ class EcotourismTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Template Cetak Stiker Plang Bambu QR Code');
     }
+
+    public function test_kafe_cupumanik_exists(): void
+    {
+        $cafe = Destination::where('slug', 'kafe-bukit-cupumanik')->first();
+        $this->assertNotNull($cafe);
+        $this->assertStringContainsString('Cupumanik', $cafe->name);
+        $this->assertEquals('Wisata Kuliner & Kafe', $cafe->category);
+    }
+
+    public function test_admin_can_manage_products(): void
+    {
+        $user = User::first();
+
+        // 1. Index
+        $response = $this->actingAs($user)->get('/admin/products');
+        $response->assertStatus(200);
+        $response->assertSee('Kelola Produk Kopi & UMKM');
+
+        // 2. Create & Store
+        $storeResponse = $this->actingAs($user)->post('/admin/products', [
+            'name' => 'Kopi Arabika Test Batch',
+            'producer_name' => 'Kelompok Tani Canggah',
+            'process_type' => 'Full Wash',
+            'roast_level' => 'Medium Roast',
+            'flavor_notes' => 'Floral, Citrus, Caramel',
+            'packaging_size' => '200 gr',
+            'price' => 75000,
+            'contact_whatsapp' => '08123456789',
+            'is_available' => 1,
+            'description' => 'Kopi uji coba kualitas panen musim ini.',
+        ]);
+        $storeResponse->assertRedirect('/admin/products');
+
+        $product = \App\Models\CoffeeProduct::where('name', 'Kopi Arabika Test Batch')->first();
+        $this->assertNotNull($product);
+        $this->assertEquals(75000, $product->price);
+
+        // 3. Edit & Update
+        $updateResponse = $this->actingAs($user)->put('/admin/products/' . $product->id, [
+            'name' => 'Kopi Arabika Test Batch Updated',
+            'producer_name' => 'Kelompok Tani Canggah',
+            'process_type' => 'Honey Process',
+            'roast_level' => 'Light to Medium',
+            'flavor_notes' => 'Honey, Peach, Jasmine',
+            'packaging_size' => '250 gr',
+            'price' => 85000,
+            'contact_whatsapp' => '08123456789',
+            'is_available' => 1,
+            'description' => 'Deskripsi diperbarui.',
+        ]);
+        $updateResponse->assertRedirect('/admin/products');
+        $this->assertEquals('Kopi Arabika Test Batch Updated', $product->fresh()->name);
+        $this->assertEquals(85000, $product->fresh()->price);
+
+        // 4. Delete
+        $deleteResponse = $this->actingAs($user)->delete('/admin/products/' . $product->id);
+        $deleteResponse->assertRedirect('/admin/products');
+        $this->assertNull(\App\Models\CoffeeProduct::where('name', 'Kopi Arabika Test Batch Updated')->first());
+    }
+
+    public function test_admin_can_update_destination_coordinates(): void
+    {
+        $user = User::first();
+        $destination = Destination::first();
+
+        $updateResponse = $this->actingAs($user)->put('/admin/destinations/' . $destination->id, [
+            'name' => $destination->name,
+            'category' => $destination->category,
+            'excerpt' => $destination->excerpt ?? 'Wisata unggulan Desa Cupunagara',
+            'description' => $destination->description,
+            'thumbnail' => $destination->thumbnail ?? 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+            'latitude' => -6.7588888,
+            'longitude' => 107.6988888,
+            'price_info' => $destination->price_info,
+            'operating_hours' => $destination->operating_hours,
+        ]);
+
+        $updateResponse->assertRedirect('/admin/destinations');
+        $fresh = $destination->fresh();
+        $this->assertEquals(-6.7588888, (float) $fresh->latitude);
+        $this->assertEquals(107.6988888, (float) $fresh->longitude);
+    }
 }

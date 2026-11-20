@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Jejaring Desa Wisata Cupunagara | Ekowisata Alam & Sentra Kopi Subang')
-@section('meta_description', 'Portal Jejaring Desa Wisata Cupunagara di lereng Gunung Canggah, Kecamatan Cisalak, Kabupaten Subang. Informasi atraksi wisata alam, produk kopi Canggah, peta sebaran, dan gerakan gotong royong kebersihan desa.')
+@section('meta_description', 'Portal Jejaring Desa Wisata Cupunagara di lereng Gunung Canggah, Kecamatan Cisalak, Kabupaten Subang. Informasi wisata alam, produk kopi Canggah, peta sebaran, dan gerakan gotong royong kebersihan desa.')
 
 @section('content')
 
@@ -176,9 +176,9 @@
 
                         <div class="flex items-center gap-3.5 p-3.5 rounded-[8px] bg-[#f6f7f2] border border-[#e7e7e7] hover:border-[#1a9120]/40 transition">
                             <div class="w-11 h-11 rounded-full bg-[#1a9120] text-white flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
                             </div>
-                            <h4 class="text-sm font-bold text-[#07370a] font-heading leading-snug">3 Titik Plang Bambu QR Code</h4>
+                            <h4 class="text-sm font-bold text-[#07370a] font-heading leading-snug">Kafe &amp; Kedai Kopi Cupumanik</h4>
                         </div>
                     </div>
 
@@ -242,13 +242,13 @@
                 </div>
                 <div class="lg:col-span-6 lg:pl-12">
                     <p class="text-[15.5px] text-[#626f62] leading-relaxed">
-                        Penataan Desa Wisata Cupunagara bertumpu pada empat pilar utama yang memadukan pelestarian alam, kemandirian ekonomi warga, dan tanggung jawab kebersihan bersama.
+                        Penataan Desa Wisata Cupunagara bertumpu pada tiga pilar utama yang memadukan pelestarian alam, kemandirian ekonomi warga, dan tanggung jawab kebersihan bersama.
                     </p>
                 </div>
             </div>
 
-            <!-- 4 Dashed-Circle Cards with Staggered Scroll Reveals -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- 3 Dashed-Circle Cards with Staggered Scroll Reveals -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="jadesta-process-card !bg-white reveal reveal-delay-100">
                     <div class="jadesta-process-card__circle">
                         <span class="jadesta-process-card__number">01</span>
@@ -269,9 +269,9 @@
                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                         </div>
                     </div>
-                    <h3 class="text-xl font-bold text-[#07370a] font-heading mb-2">Agrowisata Kopi</h3>
+                    <h3 class="text-xl font-bold text-[#07370a] font-heading mb-2">Agrowisata Kopi &amp; Kafe</h3>
                     <p class="text-sm text-[#626f62] leading-relaxed">
-                        Sentra perkebunan dan pengolahan kopi Arabika lereng Gunung Canggah yang dikelola kelompok tani lokal.
+                        Sentra perkebunan, pengolahan kopi Arabika lereng Gunung Canggah, serta kedai seduh lokal Cupumanik.
                     </p>
                 </div>
 
@@ -279,25 +279,12 @@
                     <div class="jadesta-process-card__circle">
                         <span class="jadesta-process-card__number">03</span>
                         <div class="jadesta-process-card__icon">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-[#07370a] font-heading mb-2">Plang Bambu QR</h3>
-                    <p class="text-sm text-[#626f62] leading-relaxed">
-                        Tiga titik papan informasi bambu ramah lingkungan dengan kode QR untuk panduan rute dan etika wisata.
-                    </p>
-                </div>
-
-                <div class="jadesta-process-card !bg-white reveal reveal-delay-400">
-                    <div class="jadesta-process-card__circle">
-                        <span class="jadesta-process-card__number">04</span>
-                        <div class="jadesta-process-card__icon">
                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
                     </div>
                     <h3 class="text-xl font-bold text-[#07370a] font-heading mb-2">Gotong Royong</h3>
                     <p class="text-sm text-[#626f62] leading-relaxed">
-                        Gerakan bawa pulang sampah pribadi serta pelaporan kolaboratif untuk evakuasi tumpukan sampah liar.
+                        Gerakan membawa pulang sampah pribadi serta pelaporan kolaboratif warga untuk merawat keasrian desa.
                     </p>
                 </div>
             </div>
@@ -305,7 +292,7 @@
     </section>
 
     <!-- 5. WISATA DESA & PETA SEBARAN -->
-    <section id="atraksi" class="py-20 sm:py-24 bg-[#eff6f0]">
+    <section id="wisata" class="py-20 sm:py-24 bg-[#eff6f0]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6 reveal">

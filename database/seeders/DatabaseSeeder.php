@@ -177,6 +177,33 @@ class DatabaseSeeder extends Seeder
         );
 
         Destination::updateOrCreate(
+            ['slug' => 'kafe-bukit-cupumanik'],
+            [
+                'name' => 'Kafe Bukit Cupumanik (Cupumanik Coffee)',
+                'category' => 'Wisata Kuliner & Kafe',
+                'excerpt' => 'Spot ngopi di ketinggian perbukitan lereng Gunung Canggah dengan panorama kabut pegunungan dan seduhan kopi Arabika asli Cupunagara.',
+                'description' => 'Kafe Bukit Cupumanik adalah destinasi singgah favorit bagi para pengunjung dan penikmat kopi yang datang ke Desa Cupunagara. Berlokasi di perbukitan dengan latar panorama lembah hijau dan perkebunan teh/kopi yang asri, kafe ini menyajikan aneka seduhan kopi manual brew dari ceri kopi lokal Cupunagara yang dipetik langsung oleh petani desa. Selain kopi hangat, wisatawan dapat menikmati aneka camilan khas Sunda dan suasana santai dengan semilir angin sejuk perbukitan.',
+                'thumbnail' => 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80',
+                'gallery_images' => [
+                    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80',
+                ],
+                'latitude' => -6.7571000,
+                'longitude' => 107.6908000,
+                'google_maps_url' => 'https://www.google.com/maps/dir/?api=1&destination=-6.7571000,107.6908000',
+                'facilities' => ['Area Duduk Indoor & Outdoor', 'Spot Foto Panorama Lembah', 'Mushola', 'Toilet Bersih', 'Area Parkir Motor & Mobil', 'Free Wi-Fi'],
+                'operating_hours' => '08.00 - 21.00 WIB',
+                'price_info' => 'Menu Kopi & Camilan Mulai Rp 12.000',
+                'contact_person' => 'Kang Dadan (Pengelola Kafe Cupumanik)',
+                'whatsapp_number' => '6285798991234',
+                'cleanliness_tips' => 'Buang ampas kopi, tisu, dan bungkus makanan ke tempat sampah terpilah yang disediakan di sudut kafe.',
+                'is_featured' => true,
+                'order_weight' => 4,
+            ]
+        );
+
+        Destination::updateOrCreate(
             ['slug' => 'sentra-umkm-dan-warung-warga'],
             [
                 'name' => 'Sentra UMKM Kopi & Warung Guyub Warga',

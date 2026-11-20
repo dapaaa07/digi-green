@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Direktori Atraksi Wisata Desa Cupunagara | Jejaring Desa Wisata Subang')
+@section('title', 'Direktori Wisata Desa Cupunagara | Jejaring Desa Wisata Subang')
 
 @section('content')
 
@@ -10,7 +10,7 @@
             <nav class="flex text-xs text-[#ecf2df]/80 gap-1.5 mb-3">
                 <a href="{{ route('home') }}" class="hover:text-white">Home</a>
                 <span>/</span>
-                <span class="text-white font-semibold">Atraksi Wisata</span>
+                <span class="text-white font-semibold">Wisata</span>
             </nav>
             <div class="sec-title__tagline-wrap">
                 <span class="text-[#1f9a26]">
@@ -18,10 +18,10 @@
                         <path d="M5.8 1.6 C7 2.4 8 4 8 5 C8 6 7 7.6 5.8 8.4 L3.6 10 L6.3 10 C8 10 9.5 9.1 10.6 7.5 C12.1 5.2 12.1 4.8 10.6 2.5 C9.5 0.9 8 0 6.3 0 L3.6 0 L5.8 1.6 Z" />
                     </svg>
                 </span>
-                <span class="text-xs font-bold uppercase tracking-wider text-[#1f9a26]">Direktori Daya Tarik Wisata</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-[#1f9a26]">Direktori Destinasi Wisata</span>
             </div>
             <h1 class="text-3xl sm:text-4xl font-bold text-white font-heading mt-1">
-                Atraksi &amp; Tempat Wisata Desa Cupunagara
+                Destinasi Wisata Desa Cupunagara
             </h1>
             <p class="text-sm text-[#d6dfd6] mt-2 max-w-2xl leading-relaxed">
                 Temukan panorama bukit awan Bukit Pamoyanan, agrowisata kebun kopi Canggah, air terjun alami, dan sentra kuliner warga di Kecamatan Cisalak, Kabupaten Subang.
@@ -37,13 +37,13 @@
                 <form action="{{ route('destinations.index') }}" method="GET" class="flex flex-col md:flex-row items-center gap-3">
                     <div class="relative flex-1 w-full">
                         <svg class="w-4 h-4 text-[#626f62] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama atraksi wisata, bukit, curug, kopi..." 
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama wisata, bukit, curug, kopi..." 
                                class="input-jadesta w-full pl-10">
                     </div>
 
                     <div class="w-full md:w-64">
                         <select name="category" onchange="this.form.submit()" class="input-jadesta w-full">
-                            <option value="">Semua Kategori Atraksi</option>
+                            <option value="">Semua Kategori Wisata</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat }}" {{ request('category') === $cat ? 'selected' : '' }}>{{ $cat }}</option>
                             @endforeach
@@ -68,7 +68,7 @@
                 <div class="p-4 bg-[#f2f4ec] border-b border-[#dce6d5] flex items-center justify-between">
                     <span class="text-xs font-bold uppercase tracking-wider text-[#07370a] flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-[#1a9120]"></span>
-                        Peta Sebaran Lokasi Atraksi &amp; 3 Titik Plang Bambu QR (OpenStreetMap)
+                        Peta Sebaran Lokasi Wisata Desa Cupunagara (OpenStreetMap)
                     </span>
                     <button type="button" @click="mapOpen = !mapOpen" class="text-xs font-bold text-[#1a9120] hover:underline">
                         <span x-text="mapOpen ? 'Tutup Peta' : 'Tampilkan Peta'"></span>
@@ -127,7 +127,7 @@
                                     </a>
                                     <a href="{{ route('destinations.show', $destination->slug) }}" 
                                        class="px-3.5 py-1.5 rounded-[4px] bg-[#1a9120] hover:bg-[#07370a] text-white font-bold transition">
-                                        Detail Atraksi
+                                        Detail Wisata
                                     </a>
                                 </div>
                             </div>
@@ -140,10 +140,10 @@
                 </div>
             @else
                 <div class="bg-white rounded-[6px] p-12 text-center border border-[#dce6d5] space-y-3">
-                    <h3 class="text-lg font-bold text-[#07370a] font-heading">Atraksi wisata tidak ditemukan</h3>
+                    <h3 class="text-lg font-bold text-[#07370a] font-heading">Tempat wisata tidak ditemukan</h3>
                     <p class="text-sm text-[#626f62]">Silakan ubah kata kunci pencarian atau tampilkan semua kategori wisata.</p>
                     <a href="{{ route('destinations.index') }}" class="grdeen-btn !mt-2">
-                        <span>Tampilkan Semua Atraksi</span>
+                        <span>Tampilkan Semua Wisata</span>
                     </a>
                 </div>
             @endif

@@ -48,7 +48,7 @@
             <nav class="flex text-xs text-[#626f62] gap-1.5 mb-5">
                 <a href="{{ route('home') }}" class="hover:text-[#1a9120]">Home</a>
                 <span>/</span>
-                <a href="{{ route('destinations.index') }}" class="hover:text-[#1a9120]">Atraksi Wisata</a>
+                <a href="{{ route('destinations.index') }}" class="hover:text-[#1a9120]">Wisata</a>
                 <span>/</span>
                 <span class="text-[#07370a] font-semibold">{{ $destination->name }}</span>
             </nav>
@@ -168,7 +168,7 @@
 
                     <!-- 2. Boxed Widget: Lokasi Desa Wisata & OpenStreetMap -->
                     <div class="jadesta-boxed-widget space-y-4">
-                        <h3 class="jadesta-boxed-widget__title">Lokasi Atraksi Wisata</h3>
+                        <h3 class="jadesta-boxed-widget__title">Lokasi Wisata</h3>
                         <p class="text-xs text-[#626f62] leading-relaxed">
                             <strong class="text-[#07370a]">Alamat:</strong> Desa Cupunagara, Kecamatan Cisalak, Kabupaten Subang, Jawa Barat
                         </p>
@@ -240,7 +240,7 @@
                 <div class="mt-20 pt-12 border-t border-[#e7e7e7]">
                     <div class="text-center mb-10">
                         <span class="text-xs font-bold uppercase tracking-wider text-[#1a9120] block">Jelajahi Lebih Banyak</span>
-                        <h3 class="text-2xl sm:text-3xl font-bold text-[#07370a] font-heading mt-1">Atraksi Wisata Lainnya di Sekitar</h3>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-[#07370a] font-heading mt-1">Wisata Lainnya di Sekitar</h3>
                         <div class="w-16 h-1 bg-[#1a9120] mx-auto mt-3"></div>
                     </div>
 

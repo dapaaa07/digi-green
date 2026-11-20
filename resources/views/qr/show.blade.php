@@ -68,7 +68,7 @@
 
             <!-- Destinations Nearby in Jadesta Listing Card Style -->
             <div class="bg-white rounded-[6px] p-6 sm:p-8 border border-[#dce6d5] shadow-sm space-y-4">
-                <h3 class="text-lg font-bold text-[#07370a] font-heading">Atraksi Wisata di Sekitar Titik Ini</h3>
+                <h3 class="text-lg font-bold text-[#07370a] font-heading">Wisata di Sekitar Titik Ini</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     @foreach($nearbyDestinations as $dest)
                         <a href="{{ route('destinations.show', $dest->slug) }}" class="jadesta-listing-card !h-48 group">

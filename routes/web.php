@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDestinationController;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CoffeeController;
@@ -53,5 +54,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/qr-print', [AdminDashboardController::class, 'printQr'])->name('qr.print');
         Route::resource('destinations', AdminDestinationController::class);
+        Route::resource('products', AdminProductController::class);
     });
 });
