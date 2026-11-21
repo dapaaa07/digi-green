@@ -78,8 +78,8 @@
                                 <span class="text-xs font-medium text-[#4f5345]">Wisata Utama</span>
                             </div>
                             <div>
-                                <span class="text-2xl sm:text-3xl font-extrabold text-[#07370a] font-heading block">3 Titik</span>
-                                <span class="text-xs font-medium text-[#4f5345]">Plang Bambu QR</span>
+                                <span class="text-2xl sm:text-3xl font-extrabold text-[#07370a] font-heading block">85+ Ha</span>
+                                <span class="text-xs font-medium text-[#4f5345]">Kebun Kopi</span>
                             </div>
                         </div>
 
@@ -372,14 +372,11 @@
                             </span>
                             <span class="sec-title__tagline">Geospasial Desa Wisata</span>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-[#07370a] font-heading">Peta Titik Wisata &amp; Plang Bambu QR Code</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-[#07370a] font-heading">Peta Sebaran Destinasi Wisata Desa</h3>
                     </div>
                     <div class="flex flex-wrap items-center gap-4 text-xs font-semibold">
                         <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-[#eff6f0] text-[#07370a] border border-[#1a9120]/30">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#1a9120]"></span> Titik Wisata
-                        </span>
-                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-[#faf8ec] text-[#07370a] border border-[#d97706]/40">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#d97706]"></span> 3 Plang Bambu QR
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#1a9120]"></span> Destinasi Wisata Cupunagara
                         </span>
                     </div>
                 </div>
@@ -495,26 +492,23 @@
                         </p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                            <a href="{{ route('qr.show', 'pintu-masuk') }}" 
-                               class="p-4 rounded-[8px] bg-white/10 hover:bg-white/15 border border-white/15 transition block group">
-                                <span class="text-[11px] font-bold text-[#34d399] uppercase tracking-wider block">Titik Plang QR 01</span>
-                                <strong class="text-base font-bold text-white font-heading block mt-1 group-hover:text-[#34d399] transition">Pintu Masuk Wisata</strong>
-                                <span class="text-xs text-white/70 mt-1 block">Panduan &amp; Etika &rarr;</span>
-                            </a>
+                            <div class="p-4 rounded-[8px] bg-white/10 border border-white/15">
+                                <span class="text-[11px] font-bold text-[#34d399] uppercase tracking-wider block">Prinsip 01</span>
+                                <strong class="text-base font-bold text-white font-heading block mt-1">Bawa Pulang Sampahmu</strong>
+                                <span class="text-xs text-white/75 mt-1 block">Kantongi sampah kecil pribadi hingga menemukan tempat sampah.</span>
+                            </div>
 
-                            <a href="{{ route('qr.show', 'warung-warga') }}" 
-                               class="p-4 rounded-[8px] bg-white/10 hover:bg-white/15 border border-white/15 transition block group">
-                                <span class="text-[11px] font-bold text-[#34d399] uppercase tracking-wider block">Titik Plang QR 02</span>
-                                <strong class="text-base font-bold text-white font-heading block mt-1 group-hover:text-[#34d399] transition">Sentra Warung Warga</strong>
-                                <span class="text-xs text-white/70 mt-1 block">Panduan &amp; Etika &rarr;</span>
-                            </a>
+                            <div class="p-4 rounded-[8px] bg-white/10 border border-white/15">
+                                <span class="text-[11px] font-bold text-[#34d399] uppercase tracking-wider block">Prinsip 02</span>
+                                <strong class="text-base font-bold text-white font-heading block mt-1">Jaga Keasrian Alam</strong>
+                                <span class="text-xs text-white/75 mt-1 block">Dilarang membuang sampah di lereng bukit dan aliran air.</span>
+                            </div>
 
-                            <a href="{{ route('qr.show', 'gardu-pandang') }}" 
-                               class="p-4 rounded-[8px] bg-white/10 hover:bg-white/15 border border-white/15 transition block group">
-                                <span class="text-[11px] font-bold text-[#34d399] uppercase tracking-wider block">Titik Plang QR 03</span>
-                                <strong class="text-base font-bold text-white font-heading block mt-1 group-hover:text-[#34d399] transition">Gardu Pandang Bukit</strong>
-                                <span class="text-xs text-white/70 mt-1 block">Panduan &amp; Etika &rarr;</span>
-                            </a>
+                            <div class="p-4 rounded-[8px] bg-white/10 border border-white/15">
+                                <span class="text-[11px] font-bold text-[#34d399] uppercase tracking-wider block">Prinsip 03</span>
+                                <strong class="text-base font-bold text-white font-heading block mt-1">Lapor Fasilitas Publik</strong>
+                                <span class="text-xs text-white/75 mt-1 block">Koordinasi penanganan tumpukan sampah besar bersama desa.</span>
+                            </div>
                         </div>
                     </div>
 

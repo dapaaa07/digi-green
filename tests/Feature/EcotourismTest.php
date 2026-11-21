@@ -98,7 +98,7 @@ class EcotourismTest extends TestCase
         $user = User::first();
         $response = $this->actingAs($user)->get('/admin/qr-print');
         $response->assertStatus(200);
-        $response->assertSee('Cetak Stiker Plang QR Code Resmi');
+        $response->assertSee('QR Code Resmi Desa Wisata Cupunagara');
     }
 
     public function test_kafe_cupumanik_exists(): void

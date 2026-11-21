@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Stiker Plang QR Code | Desa Wisata Cupunagara</title>
+    <title>QR Code Resmi | Desa Wisata Cupunagara</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo/logo-digi-green-pin-icon-transparent.png') }}">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,6 @@
 
     <style>
         body { font-family: 'Inter', sans-serif; color: #1e2621; }
-        h1, h2, h3, h4, .font-heading { font-family: 'DM Sans', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
 
         @media print {
@@ -26,290 +25,187 @@
                 padding: 0 !important;
                 margin: 0 !important;
             }
-            .print-card-single {
-                page-break-after: always;
-                break-after: page;
-                margin-bottom: 0 !important;
-                box-shadow: none !important;
-                border: 3px solid #07370a !important;
+            .print-container {
+                padding: 10mm !important;
+                margin: 0 !important;
+                max-width: 100% !important;
             }
-            .print-page-grid {
-                page-break-after: always;
-                break-after: page;
-                margin-bottom: 0 !important;
-            }
-            .print-card {
-                box-shadow: none !important;
-                border: 2px solid #07370a !important;
+            .qr-item {
                 break-inside: avoid;
+                page-break-inside: avoid;
             }
         }
     </style>
 </head>
-<body class="bg-[#f4f7f4] min-h-screen text-[#1e2621] p-4 sm:p-8" x-data="qrStaticPrintManager()">
+<body class="bg-[#f4f7f4] min-h-screen text-[#1e2621] p-4 sm:p-8" x-data="qrViewerManager()">
 
-    <!-- Control Header & Print Settings Panel (Hidden when printing) -->
+    <!-- Panel Kontrol & Download (Otomatis Disembunyikan Saat Dicetak) -->
     <div class="no-print max-w-4xl mx-auto mb-8 space-y-4">
         
-        <!-- Top Navigation Bar -->
+        <!-- Header Navigasi -->
         <div class="bg-white p-5 sm:p-6 rounded-[14px] border border-[#dce6d5] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
                 <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-[4px] bg-[#eff6f0] border border-[#dce6d5] text-[11px] font-bold text-[#1a9120] uppercase tracking-wider mb-1.5">
                     <span class="w-2 h-2 rounded-full bg-[#1a9120]"></span>
-                    <span>Admin Panel &bull; QR Code Statis Landing Page</span>
+                    <span>Admin Panel &bull; QR Code Landing Page</span>
                 </div>
                 <h1 class="text-xl sm:text-2xl font-bold text-[#07370a] font-heading tracking-tight">
-                    Cetak Stiker Plang QR Code Resmi
+                    QR Code Resmi Desa Wisata Cupunagara
                 </h1>
                 <p class="text-xs sm:text-sm text-[#4f5345] mt-0.5">
-                    QR Code mengarahkan pengunjung dan masyarakat langsung ke portal landing page <strong>cupunagara.my.id</strong>.
+                    QR Code statis mengarahkan pemindai langsung ke portal resmi: <strong class="text-[#07370a]">{{ $landingUrl }}</strong>
                 </p>
             </div>
-            <div class="flex items-center gap-3 shrink-0 w-full sm:w-auto">
+            
+            <div class="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
                 <a href="{{ route('admin.dashboard') }}" 
-                   class="inline-flex items-center justify-center px-4 py-2.5 rounded-[8px] border border-[#dce6d5] text-xs font-semibold text-[#07370a] hover:bg-[#eff6f0] transition w-1/2 sm:w-auto">
+                   class="inline-flex items-center justify-center px-4 py-2.5 rounded-[8px] border border-[#dce6d5] text-xs font-semibold text-[#07370a] hover:bg-[#eff6f0] transition">
                     &larr; Dashboard
                 </a>
-                <button @click="triggerPrint()" 
-                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[8px] bg-[#1a9120] hover:bg-[#07370a] text-white text-xs font-bold transition shadow-sm w-1/2 sm:w-auto">
+                <button type="button" @click="triggerPrint()" 
+                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[8px] bg-[#1a9120] hover:bg-[#07370a] text-white text-xs font-bold transition shadow-sm">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
-                    <span>Cetak Sekarang (<span x-text="quantity"></span> Stiker)</span>
+                    <span>Cetak Lembaran QR</span>
                 </button>
             </div>
         </div>
 
-        <!-- Quantity & Layout Settings Box -->
+        <!-- Toolbar Download & Pilihan Layout Cetak -->
         <div class="bg-white p-5 sm:p-6 rounded-[14px] border border-[#dce6d5] shadow-sm space-y-5">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Quantity Selector -->
-                <div>
-                    <label class="block text-xs font-bold text-[#07370a] uppercase tracking-wider mb-2">
-                        Jumlah Stiker yang Ingin Dicetak:
-                    </label>
-                    <div class="flex items-center gap-3">
-                        <div class="inline-flex items-center border-2 border-[#dce6d5] rounded-[8px] overflow-hidden bg-white shadow-xs">
-                            <button type="button" 
-                                    @click="decreaseQty()" 
-                                    class="w-10 h-10 flex items-center justify-center text-base font-bold text-[#07370a] hover:bg-[#eff6f0] transition">
-                                -
-                            </button>
-                            <input type="number" 
-                                   min="1" 
-                                   max="100" 
-                                   x-model.number="quantity" 
-                                   class="w-16 h-10 text-center text-sm font-bold text-[#07370a] border-x border-[#dce6d5] focus:outline-none">
-                            <button type="button" 
-                                    @click="increaseQty()" 
-                                    class="w-10 h-10 flex items-center justify-center text-base font-bold text-[#07370a] hover:bg-[#eff6f0] transition">
-                                +
-                            </button>
-                        </div>
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <button type="button" @click="setQty(1)" class="px-2.5 py-1.5 rounded-[6px] border border-[#dce6d5] text-xs font-bold text-[#07370a] hover:bg-[#eff6f0]">1</button>
-                            <button type="button" @click="setQty(2)" class="px-2.5 py-1.5 rounded-[6px] border border-[#dce6d5] text-xs font-bold text-[#07370a] hover:bg-[#eff6f0]">2</button>
-                            <button type="button" @click="setQty(4)" class="px-2.5 py-1.5 rounded-[6px] border border-[#dce6d5] text-xs font-bold text-[#07370a] hover:bg-[#eff6f0]">4</button>
-                            <button type="button" @click="setQty(6)" class="px-2.5 py-1.5 rounded-[6px] border border-[#dce6d5] text-xs font-bold text-[#07370a] hover:bg-[#eff6f0]">6</button>
-                            <button type="button" @click="setQty(10)" class="px-2.5 py-1.5 rounded-[6px] border border-[#dce6d5] text-xs font-bold text-[#07370a] hover:bg-[#eff6f0]">10</button>
-                        </div>
-                    </div>
-                    <p class="text-[11px] text-[#626f62] mt-2">
-                        Pilih berapa salinan stiker plang yang ingin dicetak dalam satu sesi.
-                    </p>
+            <!-- Quick Download & Copy Link -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#e7e7e7]">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-[#07370a] uppercase tracking-wider">Unduh Gambar QR Saja:</span>
+                    <a :href="qrPngUrl" download="qrcode-cupunagara.png" target="_blank"
+                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-[#eff6f0] hover:bg-[#1a9120] hover:text-white border border-[#dce6d5] text-xs font-bold text-[#07370a] transition">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                        <span>Download PNG</span>
+                    </a>
+                    <a :href="qrSvgUrl" download="qrcode-cupunagara.svg" target="_blank"
+                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-[#eff6f0] hover:bg-[#1a9120] hover:text-white border border-[#dce6d5] text-xs font-bold text-[#07370a] transition">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                        <span>Download SVG (Vektor)</span>
+                    </a>
                 </div>
 
-                <!-- Layout Mode -->
-                <div>
-                    <label class="block text-xs font-bold text-[#07370a] uppercase tracking-wider mb-2">
-                        Pilihan Ukuran Stiker / Kertas:
-                    </label>
-                    <div class="grid grid-cols-2 gap-2.5">
-                        <label class="p-3 rounded-[8px] border cursor-pointer transition flex items-center gap-2.5"
-                               :class="layoutMode === 'single' ? 'bg-[#eff6f0] border-[#1a9120] text-[#07370a] font-bold' : 'bg-white border-[#dce6d5] text-[#4f5345]'">
-                            <input type="radio" name="layout" value="single" x-model="layoutMode" class="text-[#1a9120] focus:ring-[#1a9120]">
-                            <div>
-                                <span class="text-xs block">Plang Besar</span>
-                                <span class="text-[10px] text-[#626f62] block font-normal">1 Stiker per Lembar A4</span>
-                            </div>
-                        </label>
-                        <label class="p-3 rounded-[8px] border cursor-pointer transition flex items-center gap-2.5"
-                               :class="layoutMode === 'grid2' ? 'bg-[#eff6f0] border-[#1a9120] text-[#07370a] font-bold' : 'bg-white border-[#dce6d5] text-[#4f5345]'">
-                            <input type="radio" name="layout" value="grid2" x-model="layoutMode" class="text-[#1a9120] focus:ring-[#1a9120]">
-                            <div>
-                                <span class="text-xs block">Stiker Sedang</span>
-                                <span class="text-[10px] text-[#626f62] block font-normal">2 Stiker per Lembar A4</span>
-                            </div>
-                        </label>
-                    </div>
-                    <p class="text-[11px] text-[#626f62] mt-2">
-                        Gunakan <em>Plang Besar</em> untuk plang bambu/kayu jalur wisata, atau <em>Stiker Sedang</em> untuk gazebo & meja.
-                    </p>
+                <div class="flex items-center gap-2">
+                    <button type="button" @click="copyLink()" 
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border border-[#dce6d5] text-xs font-semibold text-[#4f5345] hover:bg-[#f6f7f2] transition">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        <span x-text="copied ? 'Tersalin!' : 'Salin Tautan'"></span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Link Details -->
-            <div class="pt-3 border-t border-[#e7e7e7] flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#4f5345] gap-2">
+            <!-- Pilihan Jumlah QR untuk Lembar Cetak -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    Tautan QR Code: <code class="text-[#1a9120] font-bold bg-[#eff6f0] px-2 py-0.5 rounded-[4px] font-mono text-[11px]">{{ $landingUrl }}</code>
+                    <label class="block text-xs font-bold text-[#07370a] uppercase tracking-wider mb-2">
+                        Jumlah QR per Halaman Cetak (Grid):
+                    </label>
+                    <div class="inline-flex rounded-[8px] border border-[#dce6d5] p-1 bg-[#f4f7f4] gap-1">
+                        <button type="button" @click="gridCount = 1" 
+                                :class="gridCount === 1 ? 'bg-white shadow-xs text-[#07370a] font-bold' : 'text-[#4f5345] font-medium'"
+                                class="px-3 py-1.5 rounded-[6px] text-xs transition">
+                            1 QR Besar
+                        </button>
+                        <button type="button" @click="gridCount = 4" 
+                                :class="gridCount === 4 ? 'bg-white shadow-xs text-[#07370a] font-bold' : 'text-[#4f5345] font-medium'"
+                                class="px-3 py-1.5 rounded-[6px] text-xs transition">
+                            4 QR (2x2)
+                        </button>
+                        <button type="button" @click="gridCount = 6" 
+                                :class="gridCount === 6 ? 'bg-white shadow-xs text-[#07370a] font-bold' : 'text-[#4f5345] font-medium'"
+                                class="px-3 py-1.5 rounded-[6px] text-xs transition">
+                            6 QR (2x3)
+                        </button>
+                        <button type="button" @click="gridCount = 9" 
+                                :class="gridCount === 9 ? 'bg-white shadow-xs text-[#07370a] font-bold' : 'text-[#4f5345] font-medium'"
+                                class="px-3 py-1.5 rounded-[6px] text-xs transition">
+                            9 QR (3x3)
+                        </button>
+                        <button type="button" @click="gridCount = 12" 
+                                :class="gridCount === 12 ? 'bg-white shadow-xs text-[#07370a] font-bold' : 'text-[#4f5345] font-medium'"
+                                class="px-3 py-1.5 rounded-[6px] text-xs transition">
+                            12 QR (3x4)
+                        </button>
+                    </div>
                 </div>
-                <div class="text-[11px] text-[#626f62]">
-                    💡 <em>Tips: Gunakan stiker bahan vinyl waterproof agar tahan panas & hujan pegunungan.</em>
+
+                <div class="flex items-center gap-3">
+                    <label class="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#07370a]">
+                        <input type="checkbox" x-model="showUrlLabel" class="rounded text-[#1a9120] focus:ring-[#1a9120]">
+                        <span>Tampilkan tulisan <code class="font-mono text-[11px]">cupunagara.my.id</code> di bawah QR</span>
+                    </label>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- Printable Cards Area: Mode Single (1 card per page) -->
-    <template x-if="layoutMode === 'single'">
-        <div class="max-w-xl mx-auto space-y-10">
-            <template x-for="i in countArray" :key="'single-' + i">
-                <div class="print-card-single bg-white rounded-[20px] border-4 border-[#07370a] p-8 sm:p-10 shadow-lg text-center max-w-xl mx-auto relative overflow-hidden">
+    <!-- AREA CETAK MURNI QR (Bersih Tanpa Frame Poster / Paragraf) -->
+    <div class="print-container max-w-3xl mx-auto">
+        
+        <!-- Grid Render QR Murni -->
+        <div class="grid gap-6 sm:gap-8 justify-items-center items-center"
+             :class="{
+                'grid-cols-1': gridCount === 1,
+                'grid-cols-2': gridCount === 4 || gridCount === 6,
+                'grid-cols-3': gridCount === 9 || gridCount === 12,
+             }">
+            
+            <template x-for="n in gridCount" :key="n">
+                <div class="qr-item bg-white p-4 sm:p-5 rounded-[12px] border border-[#e0e0e0] flex flex-col items-center justify-center text-center shadow-xs">
                     
-                    <!-- Corner Accents in Jadesta Nature Green -->
-                    <div class="absolute top-0 left-0 w-8 h-8 border-t-8 border-l-8 border-[#1a9120]"></div>
-                    <div class="absolute top-0 right-0 w-8 h-8 border-t-8 border-r-8 border-[#1a9120]"></div>
-                    <div class="absolute bottom-0 left-0 w-8 h-8 border-b-8 border-l-8 border-[#1a9120]"></div>
-                    <div class="absolute bottom-0 right-0 w-8 h-8 border-b-8 border-r-8 border-[#1a9120]"></div>
-
-                    <!-- Header with Digi-Green Logo -->
-                    <div class="border-b-2 border-[#e7e7e7] pb-4 mb-6">
-                        <img src="{{ asset('images/logo/logo-digi-green-pin-horizontal-transparent.png') }}" 
-                             onerror="this.onerror=null; this.src='/images/logo/logo-digi-green-pin-horizontal-transparent.png';"
-                             alt="Digi-Green Logo" 
-                             class="h-10 mx-auto object-contain mb-3">
-                        
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#eff6f0] border border-[#dce6d5] text-[11px] font-bold text-[#1a9120] uppercase tracking-wider mb-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#1a9120]"></span>
-                            <span>Portal Resmi Desa Wisata &bull; Stiker #<span x-text="i"></span></span>
-                        </div>
-
-                        <h2 class="text-2xl sm:text-3xl font-black text-[#07370a] font-heading tracking-tight">
-                            DESA WISATA CUPUNAGARA
-                        </h2>
-                        <p class="text-xs font-mono font-semibold text-[#1a9120] tracking-wider uppercase mt-1">
-                            Kecamatan Cisalak &bull; Kabupaten Subang &bull; Jawa Barat
-                        </p>
-                    </div>
-
-                    <!-- QR Code Box -->
-                    <div class="inline-block p-4 sm:p-5 bg-white rounded-[16px] border-2 border-[#07370a] shadow-inner mb-6">
-                        <img :src="qrImageUrl" 
-                             alt="QR Code Desa Wisata Cupunagara" 
-                             class="w-60 h-60 mx-auto object-contain">
-                        <span class="text-xs font-mono font-black text-[#07370a] mt-3 block uppercase tracking-widest">
-                            PINDAI DENGAN KAMERA HP
-                        </span>
-                        <span class="text-xs font-mono font-bold text-[#1a9120] block mt-0.5">
-                            cupunagara.my.id
-                        </span>
-                    </div>
-
-                    <!-- Instructions / Features List -->
-                    <div class="text-left bg-[#fafbf9] rounded-[12px] p-5 border border-[#dce6d5] mb-6 space-y-2.5 text-xs">
-                        <p class="font-bold text-[#07370a] font-heading text-sm">
-                            📱 Pindai QR Code ini untuk Mengakses:
-                        </p>
-                        <ul class="text-[#4f5345] space-y-1.5 pl-5 list-disc font-medium leading-relaxed">
-                            <li><strong>Peta &amp; Navigasi Wisata Alam:</strong> Titik lokasi Curug Cileat, Bukit Pamoyanan, dan perkebunan kopi.</li>
-                            <li><strong>Layanan Lapor Kebersihan:</strong> Laporkan tumpukan sampah liar dan fasilitas desa yang perlu penanganan.</li>
-                            <li><strong>Wisata Kuliner:</strong> Informasi Kafe Bukit Cupumanik &amp; Kopi Specialty asli petani Cupunagara.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Gotong Royong Ethos Banner -->
-                    <div class="bg-[#eff6f0] border border-[#dce6d5] rounded-[8px] p-3 text-xs text-[#07370a] font-semibold mb-6">
-                        🍃 <strong>Budaya Gotong Royong:</strong> Nikmati keindahan alam Cupunagara, dan bawa kembali sampah kecil pribadi Anda.
-                    </div>
-
-                    <!-- Footer Credential -->
-                    <div class="text-[10px] font-mono text-[#626f62] uppercase tracking-wider border-t border-[#e7e7e7] pt-3 flex items-center justify-between">
-                        <span>NalarWarga Politeknik Negeri Subang</span>
-                        <span>Desa Cupunagara &bull; Subang</span>
-                    </div>
-
-                </div>
-            </template>
-        </div>
-    </template>
-
-    <!-- Printable Cards Area: Mode Grid2 (2 cards per A4 sheet) -->
-    <template x-if="layoutMode === 'grid2'">
-        <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 print:grid-cols-2 print:gap-4">
-            <template x-for="i in countArray" :key="'grid2-' + i">
-                <div class="print-card bg-white rounded-[16px] border-2 border-[#07370a] p-6 shadow-md text-center relative overflow-hidden flex flex-col justify-between">
+                    <!-- Gambar QR Code Murni -->
+                    <img :src="qrPngUrl" 
+                         alt="QR Code Desa Wisata Cupunagara" 
+                         :class="{
+                            'w-72 h-72 sm:w-80 sm:h-80': gridCount === 1,
+                            'w-48 h-48 sm:w-56 sm:h-56': gridCount === 4,
+                            'w-36 h-36 sm:w-44 sm:h-44': gridCount === 6,
+                            'w-28 h-28 sm:w-36 sm:h-36': gridCount === 9,
+                            'w-24 h-24 sm:w-28 sm:h-28': gridCount === 12,
+                         }"
+                         class="object-contain mx-auto">
                     
-                    <div>
-                        <!-- Header -->
-                        <div class="border-b border-[#e7e7e7] pb-3 mb-4">
-                            <img src="{{ asset('images/logo/logo-digi-green-pin-horizontal-transparent.png') }}" 
-                                 onerror="this.onerror=null; this.src='/images/logo/logo-digi-green-pin-horizontal-transparent.png';"
-                                 alt="Digi-Green Logo" 
-                                 class="h-7 mx-auto object-contain mb-2">
-                            
-                            <h2 class="text-lg font-black text-[#07370a] font-heading tracking-tight leading-tight">
-                                DESA WISATA CUPUNAGARA
-                            </h2>
-                            <p class="text-[10px] font-mono font-semibold text-[#1a9120] uppercase mt-0.5">
-                                Portal Ekowisata &amp; Kebersihan Lingkungan
-                            </p>
-                        </div>
-
-                        <!-- QR Code -->
-                        <div class="inline-block p-3 bg-white rounded-[12px] border border-[#07370a] shadow-xs mb-4">
-                            <img :src="qrImageUrl" 
-                                 alt="QR Code Desa Wisata Cupunagara" 
-                                 class="w-44 h-44 mx-auto object-contain">
-                            <span class="text-[11px] font-mono font-bold text-[#07370a] mt-2 block uppercase">
-                                Pindai dengan Kamera HP
-                            </span>
-                            <span class="text-[11px] font-mono font-bold text-[#1a9120] block">
+                    <!-- Label Teks Minimalis (Opsional) -->
+                    <template x-if="showUrlLabel">
+                        <div class="mt-2 text-center">
+                            <span class="block font-mono font-bold text-[#07370a]"
+                                  :class="gridCount <= 4 ? 'text-xs sm:text-sm' : 'text-[10px] sm:text-xs'">
                                 cupunagara.my.id
                             </span>
                         </div>
-
-                        <!-- Highlights -->
-                        <div class="text-left bg-[#eff6f0] rounded-[8px] p-3 border border-[#dce6d5] mb-3 text-[11px] text-[#07370a] space-y-1">
-                            <p class="font-bold">📱 Akses Langsung:</p>
-                            <p>&bull; Navigasi Wisata Curug &amp; Bukit</p>
-                            <p>&bull; Lapor Sampah Liar &amp; Fasilitas Rusak</p>
-                            <p>&bull; Kafe Bukit Cupumanik &amp; Kopi Lokal</p>
-                        </div>
-                    </div>
-
-                    <!-- Footer -->
-                    <div class="text-[9px] font-mono text-[#626f62] border-t border-[#e7e7e7] pt-2 flex items-center justify-between">
-                        <span>Desa Cupunagara, Subang</span>
-                        <span>Stiker #<span x-text="i"></span></span>
-                    </div>
+                    </template>
 
                 </div>
             </template>
-        </div>
-    </template>
 
-    <!-- Alpine.js Manager Script -->
+        </div>
+
+    </div>
+
+    <!-- Script Interaktif Alpine.js -->
     <script>
-        function qrStaticPrintManager() {
+        function qrViewerManager() {
             return {
-                quantity: 4,
-                layoutMode: 'single', // 'single' atau 'grid2'
+                gridCount: 1, // Default 1 QR besar, bisa pilih 4, 6, 9, 12
+                showUrlLabel: true,
+                copied: false,
                 landingUrl: @js($landingUrl),
-                get qrImageUrl() {
-                    return 'https://api.qrserver.com/v1/create-qr-code/?size=350x350&margin=8&data=' + encodeURIComponent(this.landingUrl);
+                get qrPngUrl() {
+                    return 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=4&data=' + encodeURIComponent(this.landingUrl);
                 },
-                get countArray() {
-                    const q = Math.max(1, Math.min(100, parseInt(this.quantity) || 1));
-                    return Array.from({ length: q }, (_, i) => i + 1);
+                get qrSvgUrl() {
+                    return 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=4&format=svg&data=' + encodeURIComponent(this.landingUrl);
                 },
-                setQty(val) {
-                    this.quantity = val;
-                },
-                increaseQty() {
-                    if (this.quantity < 100) this.quantity++;
-                },
-                decreaseQty() {
-                    if (this.quantity > 1) this.quantity--;
+                copyLink() {
+                    navigator.clipboard.writeText(this.landingUrl).then(() => {
+                        this.copied = true;
+                        setTimeout(() => this.copied = false, 2000);
+                    });
                 },
                 triggerPrint() {
                     window.print();
