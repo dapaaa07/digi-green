@@ -18,6 +18,7 @@ class EcotourismTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Desa Cupunagara');
         $response->assertSee('master-map');
+        $response->assertViewHas('featuredDestinations', fn($destinations) => count($destinations) === 4);
     }
 
     public function test_destinations_catalog_loads_successfully(): void
@@ -180,6 +181,8 @@ class EcotourismTest extends TestCase
             'longitude' => 107.6988888,
             'price_info' => $destination->price_info,
             'operating_hours' => $destination->operating_hours,
+            'is_featured' => 1,
+            'order_weight' => $destination->order_weight ?? 1,
         ]);
 
         $updateResponse->assertRedirect('/admin/destinations');

@@ -17,8 +17,16 @@ class HomeController extends Controller
         $profile = VillageProfile::first();
         $featuredDestinations = Destination::where('is_featured', true)
             ->orderBy('order_weight')
-            ->take(3)
+            ->take(4)
             ->get();
+
+        if ($featuredDestinations->count() < 4) {
+            $more = Destination::whereNotIn('id', $featuredDestinations->pluck('id'))
+                ->orderBy('order_weight')
+                ->take(4 - $featuredDestinations->count())
+                ->get();
+            $featuredDestinations = $featuredDestinations->concat($more);
+        }
 
         $allDestinations = Destination::orderBy('order_weight')->get();
         $qrPoints = QrPoint::where('is_active', true)->get();
