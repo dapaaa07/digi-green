@@ -212,12 +212,26 @@ class DatabaseSeeder extends Seeder
 
         // 7. Artikel & Kabar Desa
         Article::updateOrCreate(
+            ['slug' => 'desa-cupunagara-tuan-rumah-subang-fest-vol-16-dan-subang-culture-run-2026'],
+            [
+                'title' => 'Desa Cupunagara Jadi Tuan Rumah Subang Fest Vol. 16 dan Subang Culture Run 2026',
+                'category' => 'Agenda & Kegiatan Desa',
+                'excerpt' => 'Pemerintah Kabupaten Subang bersama warga Desa Cupunagara bersiap menggelar Subang Fest Vol. 16 pada 28 sampai 29 November 2026, lengkap dengan ajang lari lintas alam 5K dan 10K menyusuri kebun kopi.',
+                'content' => "Pemerintah Kabupaten Subang menetapkan kawasan perbukitan Desa Cupunagara di Kecamatan Cisalak sebagai lokasi pelaksanaan Subang Fest Vol. 16. Agenda pariwisata bulanan ini akan berlangsung selama dua hari pada Sabtu, 28 November hingga Minggu, 29 November 2026.\n\nPenyelenggaraan kali ini dipusatkan di dataran tinggi Cupunagara pada ketinggian sekitar 1.040 meter di atas permukaan laut. Pemilihan lokasi ini ditujukan untuk mengenalkan potensi alam dan perkebunan kopi desa kepada masyarakat luas, sekaligus menggerakkan ekonomi warga setempat melalui sport tourism.\n\nSalah satu agenda utama dalam perhelatan ini adalah Subang Culture Run 2026 yang digelar pada Minggu pagi, 29 November 2026. BAPOR KORPRI Kabupaten Subang bersama panitia membuka ajang lari lintas alam ini untuk umum dan komunitas pelari dari berbagai daerah. Peserta dapat memilih dua kategori jarak, yaitu 5 kilometer dan 10 kilometer, melintasi jalan desa berhawa sejuk dan jalur perkebunan kopi arabika Bukanagara.\n\nSelain kegiatan olahraga, warga desa juga menyiapkan stan pameran produk UMKM lokal Cupunagara. Pengunjung dapat menikmati seduhan kopi arabika asli kelompok tani setempat, madu hutan, hasil bumi, dan aneka jajanan tradisional. Panggung kesenian rakyat juga disiapkan untuk menampilkan atraksi seni Sunda khas Subang.\n\nPemerintah Desa Cupunagara bersama pemuda Karang Taruna dan pengelola Digi-Green mengingatkan seluruh pengunjung dan peserta untuk tetap menjaga kebersihan lingkungan. Tempat sampah terpilah dan plang panduan ber-QR Code disiagakan di titik-titik kumpul agar tidak ada sampah plastik yang tertinggal di jalur kebun maupun area pemukiman warga.",
+                'thumbnail' => 'https://images.unsplash.com/photo-1486218119243-13883505764c?auto=format&fit=crop&w=1200&q=80',
+                'author' => 'Humas Desa Cupunagara',
+                'is_published' => true,
+                'published_at' => now(),
+            ]
+        );
+
+        Article::updateOrCreate(
             ['slug' => 'sinergi-digi-green-gerakan-kampung-bebas-sampah-di-desa-cupunagara'],
             [
                 'title' => 'Sinergi Digi-Green: Gerakan Kampung Bebas Sampah Melalui Portal Web dan Plang Bambu QR Code',
                 'category' => 'Aksi Lingkungan & Bela Negara',
                 'excerpt' => 'Kolaborasi nyata mahasiswa Politeknik Negeri Subang bersama pemuda Karang Taruna dan warga Desa Cupunagara dalam mengintegrasikan teknologi dan aksi gotong royong kebersihan.',
-                'content' => 'Implementasi nilai bela negara di era modern tidak lagi sebatas pertahanan militer, melainkan diwujudkan melalui keikutsertaan aktif dalam menyelesaikan persoalan nyata di masyarakat. Melalui program Project Citizen yang diinisiasi oleh Kelompok 2 NalarWarga Jurusan TIK Politeknik Negeri Subang, Desa Cupunagara kini dilengkapi portal informasi digital terintegrasi plang bambu QR Code.\n\nPemasangan 3 plang informasi di titik strategis—pintu masuk wisata, warung warga, dan gardu pandang perbukitan—menjadi jembatan edukasi agar para wisatawan turut bertanggung jawab atas sampah yang dibawa. Selain itu, fitur pelaporan digital memudahkan warga mengadu bila menemukan titik rawan sampah sehingga dapat segera ditindaklanjuti secara gotong royong.',
+                'content' => "Implementasi nilai bela negara di era modern tidak lagi sebatas pertahanan militer, melainkan diwujudkan melalui keikutsertaan aktif dalam menyelesaikan persoalan nyata di masyarakat. Melalui program Project Citizen yang diinisiasi oleh Kelompok 2 NalarWarga Jurusan TIK Politeknik Negeri Subang, Desa Cupunagara kini dilengkapi portal informasi digital terintegrasi plang bambu QR Code.\n\nPemasangan 3 plang informasi di titik strategis, yaitu pintu masuk wisata, warung warga, dan gardu pandang perbukitan, menjadi jembatan edukasi agar para wisatawan turut bertanggung jawab atas sampah yang dibawa. Selain itu, fitur pelaporan digital memudahkan warga mengadu bila menemukan titik rawan sampah sehingga dapat segera ditindaklanjuti secara gotong royong.",
                 'thumbnail' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80',
                 'author' => 'Tim NalarWarga & Karang Taruna',
                 'is_published' => true,
@@ -231,7 +245,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Menyingkap Cita Rasa Khas Kopi Arabika Canggah dari Perbukitan Cupunagara',
                 'category' => 'Potensi Desa & UMKM',
                 'excerpt' => 'Tumbuh di tanah vulkanik lereng Gunung Canggah dengan perawatan teliti, Kopi Cupunagara berhasil memikat lidah penikmat kopi nusantara.',
-                'content' => 'Kopi bukan sekadar minuman di Desa Cupunagara, melainkan napas perekonomian dan tradisi yang diwariskan antar generasi. Terletak di perbukitan berkabut pada ketinggian lebih dari 1.000 mdpl, biji kopi Arabika di desa ini memiliki tingkat keasaman manis yang khas dengan aroma citrus dan rempah.\n\nDengan hadirnya portal digital Digi-Green ini, kelompok tani lokal kini memiliki etalase mandiri untuk memasarkan hasil panen kopi secara langsung kepada pengunjung dan penikmat kopi di berbagai daerah tanpa perantara panjang, mendorong kemakmuran petani desa secara berkelanjutan.',
+                'content' => "Kopi bukan sekadar minuman di Desa Cupunagara, melainkan napas perekonomian dan tradisi yang diwariskan antar generasi. Terletak di perbukitan berkabut pada ketinggian lebih dari 1.000 mdpl, biji kopi Arabika di desa ini memiliki tingkat keasaman manis yang khas dengan aroma citrus dan rempah.\n\nDengan hadirnya portal digital Digi-Green ini, kelompok tani lokal kini memiliki etalase mandiri untuk memasarkan hasil panen kopi secara langsung kepada pengunjung dan penikmat kopi di berbagai daerah tanpa perantara panjang, mendorong kemakmuran petani desa secara berkelanjutan.",
                 'thumbnail' => 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80',
                 'author' => 'Divisi Publikasi & UMKM Cupunagara',
                 'is_published' => true,
