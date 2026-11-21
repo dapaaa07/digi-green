@@ -258,4 +258,12 @@ class EcotourismTest extends TestCase
         $this->assertEquals(-6.7588888, (float) $fresh->latitude);
         $this->assertEquals(107.6988888, (float) $fresh->longitude);
     }
+
+    public function test_authenticated_user_visiting_login_is_redirected_to_dashboard(): void
+    {
+        $user = User::first();
+        $response = $this->actingAs($user)->get('/admin/login');
+        $response->assertRedirect('/admin');
+    }
 }
+
