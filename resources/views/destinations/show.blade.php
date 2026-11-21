@@ -267,6 +267,70 @@
 @endsection
 
 @push('scripts')
+<style>
+    .cupu-marker-wrap {
+        background: transparent !important;
+        border: none !important;
+    }
+    .cupu-text-pin {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ffffff;
+        color: #07370a;
+        border: 1.5px solid #1a9120;
+        padding: 5px 12px;
+        border-radius: 9999px;
+        font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.2;
+        box-shadow: 0 4px 12px rgba(7, 55, 10, 0.22);
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translate(-50%, -100%);
+        margin-top: -6px;
+        white-space: nowrap;
+    }
+    .cupu-text-pin .pin-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #1a9120;
+        flex-shrink: 0;
+    }
+    .cupu-text-pin .pin-title {
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+    }
+    .cupu-text-pin .pin-pointer {
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #1a9120;
+    }
+    .cupu-text-pin .pin-pointer::after {
+        content: '';
+        position: absolute;
+        bottom: 1.5px;
+        left: -4.5px;
+        width: 0;
+        height: 0;
+        border-left: 4.5px solid transparent;
+        border-right: 4.5px solid transparent;
+        border-top: 4.5px solid #ffffff;
+    }
+</style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         if (!document.getElementById('detail-map')) return;
@@ -274,15 +338,50 @@
         var lat = {{ $destination->latitude }};
         var lng = {{ $destination->longitude }};
 
-        var map = L.map('detail-map').setView([lat, lng], 15);
+        var southWest = L.latLng(-6.7920, 107.6650);
+        var northEast = L.latLng(-6.7350, 107.7120);
+        var cupunagaraBounds = L.latLngBounds(southWest, northEast);
+
+        var map = L.map('detail-map', {
+            maxBounds: cupunagaraBounds,
+            maxBoundsViscosity: 1.0,
+            minZoom: 13,
+            maxZoom: 18,
+            scrollWheelZoom: false
+        }).setView([lat, lng], 15);
+
+        map.on('click', function() {
+            map.scrollWheelZoom.enable();
+        });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-        L.marker([lat, lng]).addTo(map)
-            .bindPopup('<b>{{ $destination->name }}</b><br>{{ $destination->category }}')
+        var textPinIcon = L.divIcon({
+            className: 'cupu-marker-wrap',
+            html: `
+                <div class="cupu-text-pin">
+                    <span class="pin-dot"></span>
+                    <span class="pin-title">{{ $destination->name }}</span>
+                    <div class="pin-pointer"></div>
+                </div>
+            `,
+            iconSize: [0, 0],
+            iconAnchor: [0, 0],
+            popupAnchor: [0, -32]
+        });
+
+        L.marker([lat, lng], { icon: textPinIcon }).addTo(map)
+            .bindPopup(`
+                <div style="font-family: 'Inter', sans-serif; padding: 4px;">
+                    <span style="font-size: 10px; font-weight: 700; color: #1a9120; text-transform: uppercase;">{{ $destination->category }}</span>
+                    <h4 style="font-size: 14px; font-weight: 700; margin: 2px 0 6px; color: #07370a; font-family: 'DM Sans', sans-serif;">{{ $destination->name }}</h4>
+                    <p style="font-size: 12px; color: #626f62; margin: 0 0 8px;">Kawasan Desa Cupunagara, Cisalak, Subang</p>
+                    <a href="{{ $destination->google_maps_navigation_url }}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 5px 10px; background: #1a9120; color: #fff; font-size: 11px; font-weight: 600; text-decoration: none; border-radius: 4px;">Buka di Google Maps &rarr;</a>
+                </div>
+            `)
             .openPopup();
     });
 </script>

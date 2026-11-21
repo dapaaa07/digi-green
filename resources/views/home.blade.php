@@ -374,14 +374,31 @@
                         </div>
                         <h3 class="text-xl sm:text-2xl font-bold text-[#07370a] font-heading">Peta Sebaran Destinasi Wisata Desa</h3>
                     </div>
-                    <div class="flex flex-wrap items-center gap-4 text-xs font-semibold">
+                    <div class="flex flex-wrap items-center gap-3 text-xs font-semibold">
                         <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-[#eff6f0] text-[#07370a] border border-[#1a9120]/30">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#1a9120]"></span> Destinasi Wisata Cupunagara
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#1a9120]"></span> 8 Destinasi Cupunagara
                         </span>
+                        <button type="button" id="btn-reset-map" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-white hover:bg-[#eff6f0] text-[#07370a] border border-[#dce6d5] shadow-sm transition active:scale-95 cursor-pointer" title="Pusatkan peta ke kawasan Desa Cupunagara">
+                            <svg class="w-3.5 h-3.5 text-[#1a9120]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Pusatkan Peta
+                        </button>
                     </div>
                 </div>
 
-                <div id="master-map" class="w-full h-80 sm:h-[420px] rounded-[8px] overflow-hidden border border-[#e7e7e7]"></div>
+                <div class="space-y-2">
+                    <div id="master-map" class="w-full h-80 sm:h-[450px] rounded-[8px] overflow-hidden border border-[#e7e7e7]"></div>
+                    <div class="flex items-center justify-between text-[11px] text-[#626f62] px-1">
+                        <span class="flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-[#1a9120] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                            Peta dikunci khusus di wilayah Desa Cupunagara. Klik nama tempat untuk melihat rute &amp; detail.
+                        </span>
+                        <span class="hidden sm:inline text-gray-400">© OpenStreetMap</span>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -604,20 +621,181 @@
 @endsection
 
 @push('scripts')
+<style>
+    /* Styling Pin Koordinat Berbasis Teks (Tanpa Gambar) */
+    .cupu-marker-wrap {
+        background: transparent !important;
+        border: none !important;
+    }
+    .cupu-text-pin {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ffffff;
+        color: #07370a;
+        border: 1.5px solid #1a9120;
+        padding: 5px 10px;
+        border-radius: 9999px;
+        font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+        font-size: 11.5px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        box-shadow: 0 4px 12px rgba(7, 55, 10, 0.22);
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translate(-50%, -100%);
+        margin-top: -6px;
+        white-space: nowrap;
+    }
+    .cupu-text-pin .pin-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #1a9120;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+    }
+    /* Solusi Nama Panjang: Max-Width + Auto Ellipsis (...) */
+    .cupu-text-pin .pin-title {
+        max-width: 135px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+    }
+    /* Segitiga Panah Arah Koordinat */
+    .cupu-text-pin .pin-pointer {
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #1a9120;
+        transition: border-top-color 0.2s ease;
+    }
+    .cupu-text-pin .pin-pointer::after {
+        content: '';
+        position: absolute;
+        bottom: 1.5px;
+        left: -4.5px;
+        width: 0;
+        height: 0;
+        border-left: 4.5px solid transparent;
+        border-right: 4.5px solid transparent;
+        border-top: 4.5px solid #ffffff;
+        transition: border-top-color 0.2s ease;
+    }
+    /* Efek Interaktif Hover */
+    .cupu-text-pin:hover,
+    .cupu-text-pin.active {
+        background: #1a9120;
+        color: #ffffff;
+        border-color: #07370a;
+        transform: translate(-50%, -105%) scale(1.06);
+        box-shadow: 0 8px 20px rgba(7, 55, 10, 0.35);
+        z-index: 9999 !important;
+    }
+    .cupu-text-pin:hover .pin-dot,
+    .cupu-text-pin.active .pin-dot {
+        background: #ffffff;
+        transform: scale(1.25);
+    }
+    .cupu-text-pin:hover .pin-pointer,
+    .cupu-text-pin.active .pin-pointer {
+        border-top-color: #07370a;
+    }
+    .cupu-text-pin:hover .pin-pointer::after,
+    .cupu-text-pin.active .pin-pointer::after {
+        border-top-color: #1a9120;
+    }
+    /* Tooltip Lengkap Saat Hover */
+    .leaflet-tooltip.cupu-tooltip {
+        background: #07370a !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 6px !important;
+        padding: 6px 11px !important;
+        font-family: 'DM Sans', sans-serif !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+    }
+    .leaflet-tooltip.cupu-tooltip::before {
+        border-top-color: #07370a !important;
+    }
+</style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         if (!document.getElementById('master-map')) return;
 
-        var map = L.map('master-map').setView([-6.7562000, 107.6881000], 14);
+        // 1. Batasan Geografis Khusus Area Desa Cupunagara & Sekitarnya
+        // Mencegah peta digeser keluar wilayah desa
+        var southWest = L.latLng(-6.7920, 107.6650);
+        var northEast = L.latLng(-6.7350, 107.7120);
+        var cupunagaraBounds = L.latLngBounds(southWest, northEast);
+
+        var map = L.map('master-map', {
+            maxBounds: cupunagaraBounds,
+            maxBoundsViscosity: 1.0, // Batasan kaku: peta memantul kembali jika digeser keluar desa
+            minZoom: 13,             // Mencegah zoom-out terlalu jauh
+            maxZoom: 18,
+            scrollWheelZoom: false   // Cegah scroll halaman menggeser zoom peta secara tidak sengaja
+        }).setView([-6.7635, 107.6890], 14);
+
+        // Aktifkan scroll wheel zoom hanya jika user mengklik/fokus pada peta
+        map.on('click', function() {
+            map.scrollWheelZoom.enable();
+        });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
+        // 2. Fungsi Cerdas Penyederhanaan Label Pin untuk Mengatasi Nama Panjang
+        function formatPinLabel(name) {
+            if (!name) return '';
+            // Hapus teks dalam tanda kurung, misal (Landhuis Bukanagara)
+            var label = name.replace(/\(.*?\)/g, '').trim();
+            // Hapus kata berulang 'Cupunagara'/'Cipunagara' karena sudah dalam peta Cupunagara
+            label = label.replace(/\s+(Cupunagara|Cipunagara)\b/gi, '').trim();
+            // Ringkas frase umum jika panjangnya masih di atas 20 karakter
+            if (label.length > 20) {
+                label = label.replace(/\bKampung\s+Eco\s+Wisata\b/gi, 'Eco Wisata')
+                             .replace(/\bBukit\s+Lestari\b/gi, 'Bukit')
+                             .replace(/\bKampung\b/gi, 'Kp.');
+            }
+            return label;
+        }
+
         var destinations = @json($allDestinations);
+        var markersGroup = L.featureGroup();
+
         destinations.forEach(function(dest) {
             if (dest.latitude && dest.longitude) {
+                var shortLabel = formatPinLabel(dest.name);
+
+                // Buat Pin Berbasis Teks (Tanpa Gambar)
+                var textPinIcon = L.divIcon({
+                    className: 'cupu-marker-wrap',
+                    html: `
+                        <div class="cupu-text-pin">
+                            <span class="pin-dot"></span>
+                            <span class="pin-title">${shortLabel}</span>
+                            <div class="pin-pointer"></div>
+                        </div>
+                    `,
+                    iconSize: [0, 0],
+                    iconAnchor: [0, 0],
+                    popupAnchor: [0, -32]
+                });
+
                 var popupHtml = `
                     <div style="width: 220px; font-family: 'Inter', sans-serif;">
                         <img src="${dest.thumbnail}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
@@ -629,10 +807,43 @@
                         </div>
                     </div>
                 `;
-                L.marker([dest.latitude, dest.longitude]).addTo(map).bindPopup(popupHtml);
+
+                var marker = L.marker([dest.latitude, dest.longitude], { icon: textPinIcon })
+                    .bindPopup(popupHtml);
+
+                // Tooltip instan: Tampilkan nama LENGKAP tanpa terpotong saat pin di-hover
+                marker.bindTooltip(dest.name, {
+                    direction: 'top',
+                    offset: [0, -28],
+                    className: 'cupu-tooltip'
+                });
+
+                markersGroup.addLayer(marker);
             }
         });
 
+        markersGroup.addTo(map);
+
+        // Otomatis pusatkan tampilan peta agar semua 8 destinasi muat sempurna
+        if (markersGroup.getLayers().length > 0) {
+            map.fitBounds(markersGroup.getBounds().pad(0.12));
+        }
+
+        // 3. Tombol Reset / Pusatkan Peta jika Pengguna Tidak Sengaja Menggeser
+        var btnReset = document.getElementById('btn-reset-map');
+        if (btnReset) {
+            btnReset.addEventListener('click', function() {
+                if (markersGroup.getLayers().length > 0) {
+                    map.flyToBounds(markersGroup.getBounds().pad(0.12), {
+                        duration: 0.8
+                    });
+                } else {
+                    map.flyTo([-6.7635, 107.6890], 14, {
+                        duration: 0.8
+                    });
+                }
+            });
+        }
     });
 </script>
 @endpush
