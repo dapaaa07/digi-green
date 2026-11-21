@@ -228,6 +228,8 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $this->call(RealDestinationsSeeder::class);
+
         // 5. Produk Kopi Cupunagara (UMKM)
         CoffeeProduct::updateOrCreate(
             ['slug' => 'arabika-canggah-full-wash-200g'],

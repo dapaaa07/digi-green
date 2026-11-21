@@ -15,11 +15,11 @@
                 </span>
                 <span class="text-[11px] font-bold uppercase tracking-wider text-[#1a9120]">Etalase UMKM</span>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-[#07370a] font-heading mt-0.5">Kelola Produk Kopi &amp; UMKM</h1>
-            <p class="text-xs text-[#626f62] mt-0.5">Atur katalog produk kopi lereng Gunung Canggah, harga, stok ketersediaan, dan nomor pemesanan WhatsApp.</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-[#07370a] font-heading mt-0.5">Kelola Produk &amp; UMKM</h1>
+            <p class="text-xs text-[#626f62] mt-0.5">Atur katalog produk desa (kopi, gula aren, hasil tani &amp; suvenir), harga, ketersediaan, dan nomor WhatsApp.</p>
         </div>
         <a href="{{ route('admin.products.create') }}" class="grdeen-btn self-start sm:self-auto !py-2.5 !px-5 text-xs">
-            <span>+ Tambah Produk Kopi</span>
+            <span>+ Tambah Produk</span>
         </a>
     </div>
 

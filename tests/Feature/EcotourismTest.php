@@ -116,7 +116,7 @@ class EcotourismTest extends TestCase
         // 1. Index
         $response = $this->actingAs($user)->get('/admin/products');
         $response->assertStatus(200);
-        $response->assertSee('Kelola Produk Kopi & UMKM');
+        $response->assertSee('Kelola Produk & UMKM');
 
         // 2. Create & Store
         $storeResponse = $this->actingAs($user)->post('/admin/products', [
