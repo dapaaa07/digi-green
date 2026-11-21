@@ -95,140 +95,10 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 4. Tempat Wisata (Destinations)
-        $destPamoyanan = Destination::updateOrCreate(
-            ['slug' => 'bukit-pamoyanan-gardu-pandang'],
-            [
-                'name' => 'Bukit Pamoyanan & Gardu Pandang Cupunagara',
-                'category' => 'Wisata Alam & Pemandangan',
-                'excerpt' => 'Spot panorama perbukitan di atas awan dengan pemandangan 360 derajat lanskap hijau Subang Selatan yang memukau.',
-                'description' => 'Bukit Pamoyanan Cupunagara menawarkan pesona pemandangan perbukitan berkabut dengan hawa sejuk khas pegunungan. Pengunjung dapat menikmati momen matahari terbit (sunrise) dengan lautan awan yang menawan. Di titik ini telah terpasang plang imbauan kebersihan ber-QR Code untuk memastikan setiap pengunjung turut menjaga kelestarian bukit dari sampah plastik.',
-                'thumbnail' => 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
-                'gallery_images' => [
-                    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?auto=format&fit=crop&w=1000&q=80',
-                ],
-                'latitude' => -6.7562000,
-                'longitude' => 107.6881000,
-                'google_maps_url' => 'https://www.google.com/maps/dir/?api=1&destination=-6.7562000,107.6881000',
-                'facilities' => ['Spot Foto Gardu Pandang', 'Area Parkir Motor & Mobil', 'Mushola Bambu', 'Toilet Bersih', 'Warung Kopi & Makanan Ringan', 'Gazebo Istirahat'],
-                'operating_hours' => '05.30 - 18.00 WIB',
-                'price_info' => 'Retribusi Kebersihan Rp 5.000 / Pengunjung',
-                'contact_person' => 'Kang Asep (Pokdarwis Cupunagara)',
-                'whatsapp_number' => '6285798991234',
-                'cleanliness_tips' => 'Jangan tinggalkan botol minum sekali pakai atau bungkus makanan ringan di lereng bukit. Bawa kembali sampah Anda ke drop-box di pintu keluar parkir.',
-                'is_featured' => true,
-                'order_weight' => 1,
-            ]
-        );
-
-        Destination::updateOrCreate(
-            ['slug' => 'agrowisata-kebun-kopi-canggah'],
-            [
-                'name' => 'Agrowisata Perkebunan Kopi Canggah',
-                'category' => 'Agrowisata Kopi & Edukasi',
-                'excerpt' => 'Pengalaman belajar proses budidaya kopi Arabika unggulan Cupunagara langsung dari kebun lereng pegunungan hingga cangkir seduh.',
-                'description' => 'Desa Cupunagara tersohor berkat varietas kopi Arabika yang tumbuh subur di ketinggian 1.100 mdpl lereng Gunung Canggah. Di agrowisata ini, wisatawan diajak berjalan menyusuri barisan pohon kopi, memetik buah ceri merah matang di musim panen, menyaksikan proses fermentasi (Natural, Honey, Full Wash), hingga belajar menyangrai biji kopi secara tradisional bersama petani lokal.',
-                'thumbnail' => 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80',
-                'gallery_images' => [
-                    'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80',
-                ],
-                'latitude' => -6.7584100,
-                'longitude' => 107.6923000,
-                'google_maps_url' => 'https://www.google.com/maps/dir/?api=1&destination=-6.7584100,107.6923000',
-                'facilities' => ['Jalur Edukasi Kebun Kopi', 'Rumah Pengolahan & Roastery Tradisional', 'Kedai Seduh Kopi Cupunagara', 'Toilet', 'Area Duduk Terbuka'],
-                'operating_hours' => '07.30 - 17.00 WIB',
-                'price_info' => 'Kunjungan Edukasi Mandiri: Gratis | Paket Edukasi Petik & Seduh Kopi Hubungi Admin',
-                'contact_person' => 'Pak Dedi (Ketua Kelompok Tani Kopi)',
-                'whatsapp_number' => '6285798991234',
-                'cleanliness_tips' => 'Dilarang mematahkan ranting pohon kopi dan dilarang membuang puntung rokok sembarangan di area kebun kopi untuk menghindari bahaya kebakaran daun kering.',
-                'is_featured' => true,
-                'order_weight' => 2,
-            ]
-        );
-
-        Destination::updateOrCreate(
-            ['slug' => 'curug-masigit-dan-aliran-sungai'],
-            [
-                'name' => 'Curug Masigit & Aliran Sungai Cisalak',
-                'category' => 'Wisata Air Alami',
-                'excerpt' => 'Gemercik air terjun alami dengan kolam air jernih segar yang dikelilingi tebing batu dan pepohonan hijau rindang.',
-                'description' => 'Bagi pencinta ketenangan alam, Curug Masigit menawarkan kesegaran air pegunungan alami yang mengalir melintasi lembah Desa Cupunagara. Suasananya yang masih sangat alami cocok untuk relaksasi, bermain air, atau trekking ringan menyusuri tepian sungai yang asri.',
-                'thumbnail' => 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80',
-                'gallery_images' => [
-                    'https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80',
-                ],
-                'latitude' => -6.7521000,
-                'longitude' => 107.6845000,
-                'google_maps_url' => 'https://www.google.com/maps/dir/?api=1&destination=-6.7521000,107.6845000',
-                'facilities' => ['Jalur Trekking Alami', 'Kamar Bilas Sederhana', 'Tempat Penitipan Barang di Warung Warga', 'Area Bersantai Alami'],
-                'operating_hours' => '07.00 - 16.30 WIB',
-                'price_info' => 'Retribusi Kebersihan Lingkungan Rp 5.000 / Orang',
-                'contact_person' => 'Kang Irham (Karang Taruna Div. Lingkungan)',
-                'whatsapp_number' => '6285798991234',
-                'cleanliness_tips' => 'Jaga kebersihan sumber mata air desa! Dilarang keras menggunakan sabun kimia di aliran sungai utama dan wajib membawa kembali plastik makanan Anda.',
-                'is_featured' => true,
-                'order_weight' => 3,
-            ]
-        );
-
-        Destination::updateOrCreate(
-            ['slug' => 'kafe-bukit-cupumanik'],
-            [
-                'name' => 'Kafe Bukit Cupumanik (Cupumanik Coffee)',
-                'category' => 'Wisata Kuliner & Kafe',
-                'excerpt' => 'Spot ngopi di ketinggian perbukitan lereng Gunung Canggah dengan panorama kabut pegunungan dan seduhan kopi Arabika asli Cupunagara.',
-                'description' => 'Kafe Bukit Cupumanik adalah destinasi singgah favorit bagi para pengunjung dan penikmat kopi yang datang ke Desa Cupunagara. Berlokasi di perbukitan dengan latar panorama lembah hijau dan perkebunan teh/kopi yang asri, kafe ini menyajikan aneka seduhan kopi manual brew dari ceri kopi lokal Cupunagara yang dipetik langsung oleh petani desa. Selain kopi hangat, wisatawan dapat menikmati aneka camilan khas Sunda dan suasana santai dengan semilir angin sejuk perbukitan.',
-                'thumbnail' => 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80',
-                'gallery_images' => [
-                    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80',
-                ],
-                'latitude' => -6.7571000,
-                'longitude' => 107.6908000,
-                'google_maps_url' => 'https://www.google.com/maps/dir/?api=1&destination=-6.7571000,107.6908000',
-                'facilities' => ['Area Duduk Indoor & Outdoor', 'Spot Foto Panorama Lembah', 'Mushola', 'Toilet Bersih', 'Area Parkir Motor & Mobil', 'Free Wi-Fi'],
-                'operating_hours' => '08.00 - 21.00 WIB',
-                'price_info' => 'Menu Kopi & Camilan Mulai Rp 12.000',
-                'contact_person' => 'Kang Dadan (Pengelola Kafe Cupumanik)',
-                'whatsapp_number' => '6285798991234',
-                'cleanliness_tips' => 'Buang ampas kopi, tisu, dan bungkus makanan ke tempat sampah terpilah yang disediakan di sudut kafe.',
-                'is_featured' => true,
-                'order_weight' => 4,
-            ]
-        );
-
-        Destination::updateOrCreate(
-            ['slug' => 'sentra-umkm-dan-warung-warga'],
-            [
-                'name' => 'Sentra UMKM Kopi & Warung Guyub Warga',
-                'category' => 'Budaya & UMKM Desa',
-                'excerpt' => 'Titik kumpul warga desa yang hangat, menyajikan kuliner khas Sunda dan etalase aneka produk kopi bubuk dan sangrai Cupunagara.',
-                'description' => 'Di pusat desa dekat balai pertemuan, sentra warung warga menjadi etalase utama pergerakan ekonomi desa. Di sini wisatawan dapat mencicipi aneka jajanan tradisional, nasi liwet khas Subang, dan membeli buah tangan kopi roasted bean berkualitas tinggi yang dikemas rapi oleh kelompok tani.',
-                'thumbnail' => 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80',
-                'gallery_images' => [
-                    'https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80',
-                ],
-                'latitude' => -6.7595000,
-                'longitude' => 107.6898000,
-                'google_maps_url' => 'https://www.google.com/maps/dir/?api=1&destination=-6.7595000,107.6898000',
-                'facilities' => ['Tempat Parkir Luas', 'Mushola Desa', 'Kantin & Warung Makan', 'Galeri Display Produk UMKM Kopi', 'Toilet Umum'],
-                'operating_hours' => '06.30 - 21.00 WIB',
-                'price_info' => 'Bebas Masuk / Terbuka untuk Umum',
-                'contact_person' => 'Teh Amanda (Bendahara Karang Taruna & UMKM)',
-                'whatsapp_number' => '6285798991234',
-                'cleanliness_tips' => 'Gunakan tempat sampah pilah (Organik & Anorganik) yang telah disiapkan di depan setiap gerai warung.',
-                'is_featured' => false,
-                'order_weight' => 4,
-            ]
-        );
-
+        // 4. Tempat Wisata (8 Destinasi Nyata Cupunagara)
         $this->call(RealDestinationsSeeder::class);
+        $destGunungGeulis = Destination::where('slug', 'bukit-lestari-gunung-geulis')->first();
+        $destCurug = Destination::where('slug', 'curug-cikaruncang')->first();
 
         // 5. Produk Kopi Cupunagara (UMKM)
         CoffeeProduct::updateOrCreate(
@@ -289,7 +159,7 @@ class DatabaseSeeder extends Seeder
         Report::updateOrCreate(
             ['ticket_code' => 'CPN-202611-001'],
             [
-                'destination_id' => $destPamoyanan->id,
+                'destination_id' => $destGunungGeulis?->id,
                 'qr_point_id' => $qrGarduPandang->id,
                 'reporter_name' => 'Rizky Pratama',
                 'reporter_phone' => '081234567891',
@@ -307,7 +177,7 @@ class DatabaseSeeder extends Seeder
         Report::updateOrCreate(
             ['ticket_code' => 'CPN-202611-002'],
             [
-                'destination_id' => $destPamoyanan->id,
+                'destination_id' => $destCurug?->id,
                 'qr_point_id' => $qrPintuMasuk->id,
                 'reporter_name' => 'Siti Nurhaliza (Wisatawan Bandung)',
                 'reporter_phone' => '087811223344',

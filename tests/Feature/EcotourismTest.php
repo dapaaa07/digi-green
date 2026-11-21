@@ -24,7 +24,7 @@ class EcotourismTest extends TestCase
     {
         $response = $this->get('/wisata');
         $response->assertStatus(200);
-        $response->assertSee('Bukit Pamoyanan');
+        $response->assertSee('Curug Cikaruncang');
     }
 
     public function test_destination_detail_page_loads(): void
@@ -101,12 +101,17 @@ class EcotourismTest extends TestCase
         $response->assertSee('QR Code Resmi Desa Wisata Cupunagara');
     }
 
-    public function test_kafe_cupumanik_exists(): void
+    public function test_real_destinations_exist(): void
     {
-        $cafe = Destination::where('slug', 'kafe-bukit-cupumanik')->first();
-        $this->assertNotNull($cafe);
-        $this->assertStringContainsString('Cupumanik', $cafe->name);
-        $this->assertEquals('Wisata Kuliner & Kafe', $cafe->category);
+        $curug = Destination::where('slug', 'curug-cikaruncang')->first();
+        $this->assertNotNull($curug);
+        $this->assertEquals('Curug Cikaruncang', $curug->name);
+
+        $gunungGeulis = Destination::where('slug', 'bukit-lestari-gunung-geulis')->first();
+        $this->assertNotNull($gunungGeulis);
+        $this->assertEquals('Bukit Lestari Gunung Geulis', $gunungGeulis->name);
+
+        $this->assertCount(8, Destination::all());
     }
 
     public function test_admin_can_manage_products(): void
