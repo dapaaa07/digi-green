@@ -68,7 +68,6 @@
 
             <!-- User Menu & Logout -->
             <div class="flex items-center gap-3">
-                <span class="text-xs text-[#626f62] hidden sm:inline-block">Halo, <strong class="text-[#07370a]">{{ Auth::user()->name ?? 'Pengelola' }}</strong></span>
                 <form action="{{ route('admin.logout') }}" method="POST" class="inline">
                     @csrf
                     <button type="submit" class="px-3.5 py-1.5 rounded-[6px] text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition">
