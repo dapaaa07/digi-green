@@ -1,15 +1,15 @@
-# Panduan Hosting Digi-Green Cupunagara di Subdomain (`stagging.dafung.web.id`)
+# Panduan Hosting & Migrasi Digi-Green Cupunagara (`cupunagara.my.id`)
 
-Panduan lengkap untuk mempublikasikan website **Digi-Green Desa Wisata Cupunagara** ke subdomain `https://stagging.dafung.web.id` pada hosting **cPanel (LiteSpeed / Apache) + Cloudflare**.
+Panduan lengkap untuk mempublikasikan website **Digi-Green Desa Wisata Cupunagara** ke domain utama `https://cupunagara.my.id` pada hosting **cPanel (LiteSpeed / Apache) + Cloudflare**.
 
 ---
 
-## 📌 Ringkasan Parameter Staging
+## 📌 Ringkasan Parameter Hosting
 
 | Parameter | Nilai Rekomendasi |
 | :--- | :--- |
-| **Domain / Subdomain** | `stagging.dafung.web.id` |
-| **Document Root** | `stagging.dafung.web.id/public` (atau `public_html/stagging/public`) |
+| **Domain Utama** | `cupunagara.my.id` (dan `www.cupunagara.my.id`) |
+| **Document Root** | `cupunagara.my.id/public` (atau `public_html/public`) |
 | **PHP Version** | **PHP 8.3** atau **PHP 8.4** |
 | **Database** | MySQL / MariaDB (Import dari `database/cupunagara_backup.sql`) |
 | **Repository GitHub** | `https://github.com/dapaaa07/digi-green.git` |
@@ -17,30 +17,46 @@ Panduan lengkap untuk mempublikasikan website **Digi-Green Desa Wisata Cupunagar
 
 ---
 
-## 🌐 Langkah 1: Pengaturan DNS di Cloudflare
+## 🌐 Langkah 1: Pengaturan DNS & SSL di Cloudflare
 
-Karena domain `dafung.web.id` terhubung ke **Cloudflare**, Anda wajib menambahkan DNS record untuk subdomain `stagging` agar dapat diakses:
+Untuk menghubungkan domain `cupunagara.my.id` ke hosting cPanel melalui Cloudflare:
 
-1. Buka [Cloudflare Dashboard](https://dash.cloudflare.com/) $\rightarrow$ Pilih domain **dafung.web.id** $\rightarrow$ Masuk ke menu **DNS** $\rightarrow$ **Records**.
-2. Klik **Add record**:
-   - **Type**: `CNAME`
-   - **Name**: `stagging`
-   - **Target**: `dafung.web.id`
-   - **Proxy status**: **Proxied** (awan oranye aktif untuk SSL gratis & proteksi Cloudflare).
-   *(Atau pilih Type `A`, Name `stagging`, IPv4 address isi dengan IP server hosting cPanel Anda).*
-3. Klik **Save**. Tunggu 1–2 menit hingga DNS tersinkronisasi.
+### 1.1. Daftarkan Domain & Ganti Nameserver
+1. Buka [Cloudflare Dashboard](https://dash.cloudflare.com/) $\rightarrow$ Klik **Add a site** $\rightarrow$ Masukkan `cupunagara.my.id`.
+2. Pilih paket **Free** $\rightarrow$ Catat **2 Nameserver Cloudflare** yang diberikan (contoh: `xxx.ns.cloudflare.com` & `yyy.ns.cloudflare.com`).
+3. Buka dashboard tempat Anda membeli domain `cupunagara.my.id` (Niagahoster, DomaiNesia, IDCloudHost, Rumahweb, dll.) $\rightarrow$ Ubah Nameserver domain menjadi 2 Nameserver Cloudflare tersebut.
+
+### 1.2. Tambahkan DNS Records
+Masuk ke menu **DNS** $\rightarrow$ **Records** pada domain `cupunagara.my.id`:
+
+| Type | Name | IPv4 address / Target | Proxy Status | TTL | Keterangan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **A** | `@` | `<IP_SERVER_CPANEL>` | **Proxied** (Awan Oranye) | Auto | Domain utama |
+| **CNAME** | `www` | `cupunagara.my.id` | **Proxied** (Awan Oranye) | Auto | Subdomain www |
+| **A** *(opsional)* | `mail` | `<IP_SERVER_CPANEL>` | **DNS Only** (Awan Abu-abu) | Auto | Khusus webmail |
+
+*(Catatan: `<IP_SERVER_CPANEL>` dapat dilihat di cPanel sebelah kanan pada kolom **Shared IP Address**).*
+
+### 1.3. Konfigurasi SSL/TLS (Pencegahan ERR_TOO_MANY_REDIRECTS)
+1. Buka menu **SSL/TLS** $\rightarrow$ **Overview**:
+   - Pilih mode: **Full** (atau **Full (strict)** jika AutoSSL di cPanel sudah terbit).
+   - ⚠️ *PENTING: Jangan gunakan mode Flexible karena akan menimbulkan redirect loop pada Laravel.*
+2. Buka menu **SSL/TLS** $\rightarrow$ **Edge Certificates**:
+   - **Always Use HTTPS**: **ON**
+   - **Automatic HTTPS Rewrites**: **ON**
+   - **Minimum TLS Version**: **TLS 1.2**
 
 ---
 
-## ⚙️ Langkah 2: Buat Subdomain di cPanel
+## ⚙️ Langkah 2: Tambahkan Domain di cPanel
 
 1. Login ke **cPanel** akun hosting Anda.
-2. Cari menu **Domains** (atau **Subdomains**).
+2. Cari menu **Domains**.
 3. Klik **Create A New Domain**:
-   - **Domain**: `stagging.dafung.web.id`
-   - **Pastikan UNCHECK** opsi *"Share document root (/home/username/public_html) with 'dafung.web.id'"*.
+   - **Domain**: `cupunagara.my.id`
+   - **Pastikan UNCHECK** opsi *"Share document root"*.
    - **Document Root**: Isi dengan path yang mengarah ke folder **`/public`**, contoh:
-     `stagging.dafung.web.id/public` atau `public_html/stagging/public`.
+     `cupunagara.my.id/public` (atau `public_html/public` jika sebagai domain utama cPanel).
      > ⚠️ **SANGAT PENTING**: Laravel mewajibkan web server mengarah ke folder `/public` demi keamanan file sistem dan agar route Laravel berfungsi normal.
 4. Klik **Submit**.
 
@@ -49,7 +65,7 @@ Karena domain `dafung.web.id` terhubung ke **Cloudflare**, Anda wajib menambahka
 ## 🐘 Langkah 3: Pastikan Versi PHP 8.3 / 8.4
 
 1. Di cPanel, cari menu **MultiPHP Manager** atau **Select PHP Version**.
-2. Pilih domain/subdomain `stagging.dafung.web.id`.
+2. Pilih domain `cupunagara.my.id`.
 3. Set versi ke **PHP 8.3** atau **PHP 8.4** lalu klik **Apply**.
 4. Pastikan ekstensi berikut aktif: `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `curl`, `fileinfo`.
 
@@ -79,7 +95,7 @@ File ZIP siap deploy sudah dibuatkan di:
 `/opt/lampp/htdocs/digi-green-deploy.zip` (Ukuran ~20 MB).
 
 1. Buka **File Manager** di cPanel.
-2. Buka folder root subdomain Anda (misalnya `/home/username/stagging.dafung.web.id`).
+2. Buka folder root domain Anda (misalnya `/home/username/cupunagara.my.id` atau `public_html`).
 3. Upload file `digi-green-deploy.zip`.
 4. Klik kanan file ZIP $\rightarrow$ pilih **Extract**.
 5. Salin file `.env.example` menjadi `.env`, lalu edit isinya:
@@ -88,7 +104,7 @@ File ZIP siap deploy sudah dibuatkan di:
    APP_ENV=production
    APP_KEY=base64:KgzgIkI0kc3H7IutNbUQV5LBg8qC5HOZwAB0ePs0l9w=
    APP_DEBUG=false
-   APP_URL=https://stagging.dafung.web.id
+   APP_URL=https://cupunagara.my.id
 
    DB_CONNECTION=mysql
    DB_HOST=localhost
@@ -97,7 +113,7 @@ File ZIP siap deploy sudah dibuatkan di:
    DB_USERNAME=username_cupuuser
    DB_PASSWORD=PasswordDatabaseAnda
    ```
-6. Selesai! Buka `https://stagging.dafung.web.id` di browser.
+6. Selesai! Buka `https://cupunagara.my.id` di browser.
 
 ---
 
@@ -105,11 +121,11 @@ File ZIP siap deploy sudah dibuatkan di:
 
 1. Buka menu **Git™ Version Control** di cPanel $\rightarrow$ Klik **Create**.
 2. Masukkan URL: `https://github.com/dapaaa07/digi-green.git`.
-3. Tentukan repository path ke folder subdomain Anda.
+3. Tentukan repository path ke folder domain Anda.
 4. Klik **Create**.
 5. Buka **Terminal** di cPanel, masuk ke folder project:
    ```bash
-   cd ~/stagging.dafung.web.id
+   cd ~/cupunagara.my.id
    cp .env.example .env
    ```
 6. Sesuaikan konfigurasi `.env` (Database & APP_URL).
@@ -126,12 +142,13 @@ File ZIP siap deploy sudah dibuatkan di:
 
 ## 🔒 Langkah 6: Verifikasi & Login Admin
 
-1. Buka browser: `https://stagging.dafung.web.id`
+1. Buka browser: `https://cupunagara.my.id`
    - Pastikan halaman beranda bertema **Jadesta Kemenpar** muncul dengan logo Digi-Green, peta sebaran, wisata, produk kopi, dan tombol lapor kebersihan.
 2. Login Admin Karang Taruna:
-   - URL: `https://stagging.dafung.web.id/admin/login`
+   - URL: `https://cupunagara.my.id/admin/login`
    - Email: `admin@cupunagara.desa.id`
    - Password: `password123`
 3. Cek halaman cetak QR plang bambu:
-   - URL: `https://stagging.dafung.web.id/admin/qr/print`
+   - URL: `https://cupunagara.my.id/admin/qr/print`
    - Anda dapat langsung mencetak stiker QR code untuk ditempel di plang bambu lokasi wisata.
+
