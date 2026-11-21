@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\CoffeeProduct;
 use App\Models\Destination;
 use App\Models\QrPoint;
@@ -21,6 +22,7 @@ class AdminDashboardController extends Controller
             'resolved_reports' => Report::where('status', 'resolved')->count(),
             'total_qr_scans' => QrPoint::sum('scan_count'),
             'total_coffees' => CoffeeProduct::count(),
+            'total_articles' => Article::count(),
         ];
 
         $recentReports = Report::with(['destination', 'qrPoint'])

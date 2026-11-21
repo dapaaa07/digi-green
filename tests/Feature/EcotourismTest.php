@@ -46,6 +46,21 @@ class EcotourismTest extends TestCase
         $response->assertSee('Pesan via WA');
     }
 
+    public function test_public_articles_catalog_and_detail_loads(): void
+    {
+        // 1. Index
+        $response = $this->get('/kabar');
+        $response->assertStatus(200);
+        $response->assertSee('Informasi &amp; Kegiatan Desa Wisata Cupunagara', false);
+
+        // 2. Detail
+        $article = \App\Models\Article::where('is_published', true)->first();
+        $this->assertNotNull($article);
+        $detailResponse = $this->get('/kabar/' . $article->slug);
+        $detailResponse->assertStatus(200);
+        $detailResponse->assertSee($article->title);
+    }
+
     public function test_user_can_submit_cleanliness_report(): void
     {
         Storage::fake('public');
@@ -164,6 +179,53 @@ class EcotourismTest extends TestCase
         $deleteResponse = $this->actingAs($user)->delete('/admin/products/' . $product->id);
         $deleteResponse->assertRedirect('/admin/products');
         $this->assertNull(\App\Models\CoffeeProduct::where('name', 'Kopi Arabika Test Batch Updated')->first());
+    }
+
+    public function test_admin_can_manage_articles(): void
+    {
+        $user = User::first();
+
+        // 1. Index
+        $response = $this->actingAs($user)->get('/admin/articles');
+        $response->assertStatus(200);
+        $response->assertSee('Kelola Berita');
+
+        // 2. Create & Store
+        $storeResponse = $this->actingAs($user)->post('/admin/articles', [
+            'title' => 'Festival Panen Raya Kopi Desa Cupunagara 2026',
+            'category' => 'Kegiatan Desa',
+            'author' => 'Tim Redaksi Cupunagara',
+            'excerpt' => 'Masyarakat Desa Cupunagara menyambut panen raya kopi dengan penuh antusias.',
+            'content' => 'Festival panen raya kopi ini dihadiri oleh ratusan petani dan pengunjung dari berbagai daerah.',
+            'thumbnail' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09',
+            'is_published' => 1,
+            'published_at' => now()->format('Y-m-d H:i:s'),
+        ]);
+        $storeResponse->assertRedirect('/admin/articles');
+
+        $article = \App\Models\Article::where('title', 'Festival Panen Raya Kopi Desa Cupunagara 2026')->first();
+        $this->assertNotNull($article);
+        $this->assertEquals('festival-panen-raya-kopi-desa-cupunagara-2026', $article->slug);
+        $this->assertTrue($article->is_published);
+
+        // 3. Edit & Update
+        $updateResponse = $this->actingAs($user)->put('/admin/articles/' . $article->id, [
+            'title' => 'Festival Panen Raya Kopi Cupunagara 2026 Edisi Spesial',
+            'category' => 'Potensi Desa & UMKM',
+            'author' => 'Tim Redaksi Cupunagara',
+            'excerpt' => 'Ringkasan artikel diperbarui.',
+            'content' => 'Konten artikel berita lengkap berhasil diperbarui.',
+            'thumbnail' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09',
+            'is_published' => 1,
+        ]);
+        $updateResponse->assertRedirect('/admin/articles');
+        $this->assertEquals('Festival Panen Raya Kopi Cupunagara 2026 Edisi Spesial', $article->fresh()->title);
+        $this->assertEquals('Potensi Desa & UMKM', $article->fresh()->category);
+
+        // 4. Delete
+        $deleteResponse = $this->actingAs($user)->delete('/admin/articles/' . $article->id);
+        $deleteResponse->assertRedirect('/admin/articles');
+        $this->assertNull(\App\Models\Article::where('title', 'Festival Panen Raya Kopi Cupunagara 2026 Edisi Spesial')->first());
     }
 
     public function test_admin_can_update_destination_coordinates(): void

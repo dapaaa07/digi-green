@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminArticleController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDestinationController;
@@ -55,5 +56,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/qr-print', [AdminDashboardController::class, 'printQr'])->name('qr.print');
         Route::resource('destinations', AdminDestinationController::class);
         Route::resource('products', AdminProductController::class);
+        Route::resource('articles', AdminArticleController::class);
     });
 });

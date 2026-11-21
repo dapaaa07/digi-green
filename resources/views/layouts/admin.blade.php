@@ -55,6 +55,10 @@
                        class="px-3 py-2 rounded-[6px] transition {{ request()->routeIs('admin.products.*') ? 'bg-[#ecf2df] text-[#07370a] font-extrabold' : 'hover:text-[#1a9120] hover:bg-[#f6f7f2]' }}">
                         Kelola Produk
                     </a>
+                    <a href="{{ route('admin.articles.index') }}" 
+                       class="px-3 py-2 rounded-[6px] transition {{ request()->routeIs('admin.articles.*') ? 'bg-[#ecf2df] text-[#07370a] font-extrabold' : 'hover:text-[#1a9120] hover:bg-[#f6f7f2]' }}">
+                        Kelola Berita
+                    </a>
                     <a href="{{ route('admin.qr.print') }}" target="_blank" 
                        class="px-3 py-2 rounded-[6px] transition hover:text-[#1a9120] hover:bg-[#f6f7f2]">
                         Cetak QR Plang

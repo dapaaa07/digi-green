@@ -19,7 +19,7 @@
     </div>
 
     <!-- Stats Grid in Jadesta Theme -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         <div class="bg-white p-5 rounded-[10px] border border-[#dce6d5] shadow-sm">
             <span class="text-[11px] text-[#626f62] font-bold uppercase tracking-wider block">Tempat Wisata</span>
             <span class="text-3xl font-bold text-[#07370a] font-heading mt-1 block">{{ $stats['total_destinations'] }}</span>
@@ -30,6 +30,12 @@
             <span class="text-[11px] text-[#626f62] font-bold uppercase tracking-wider block">Produk Kopi</span>
             <span class="text-3xl font-bold text-[#07370a] font-heading mt-1 block">{{ $stats['total_coffees'] }}</span>
             <a href="{{ route('admin.products.index') }}" class="text-[11px] text-[#1a9120] font-bold hover:underline mt-2 inline-block">Kelola Produk &rarr;</a>
+        </div>
+
+        <div class="bg-white p-5 rounded-[10px] border border-[#dce6d5] shadow-sm">
+            <span class="text-[11px] text-[#626f62] font-bold uppercase tracking-wider block">Berita Desa</span>
+            <span class="text-3xl font-bold text-[#07370a] font-heading mt-1 block">{{ $stats['total_articles'] ?? 0 }}</span>
+            <a href="{{ route('admin.articles.index') }}" class="text-[11px] text-[#1a9120] font-bold hover:underline mt-2 inline-block">Kelola Berita &rarr;</a>
         </div>
 
         <div class="bg-white p-5 rounded-[10px] border border-[#dce6d5] shadow-sm">
