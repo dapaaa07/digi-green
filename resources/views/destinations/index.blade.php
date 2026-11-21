@@ -182,19 +182,6 @@
             }
         });
 
-        var qrPoints = @json($qrPoints);
-        qrPoints.forEach(function(qr) {
-            if (qr.latitude && qr.longitude) {
-                var qrPopup = `
-                    <div style="width: 210px; font-family: 'Inter', sans-serif;">
-                        <span style="font-size: 10px; font-weight: 700; color: #fff; background: #1a9120; padding: 2px 8px; border-radius: 3px;">PLANG BAMBU QR</span>
-                        <h4 style="font-size: 13px; font-weight: 700; margin: 8px 0 4px; color: #07370a;">${qr.location_name}</h4>
-                        <a href="/qr/${qr.code}" style="display: block; width: 100%; padding: 6px; font-size: 11px; text-align: center; background: #07370a; color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600;">Panduan Titik</a>
-                    </div>
-                `;
-                L.marker([qr.latitude, qr.longitude]).addTo(map).bindPopup(qrPopup);
-            }
-        });
     });
 </script>
 @endpush

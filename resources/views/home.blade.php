@@ -639,20 +639,6 @@
             }
         });
 
-        var qrPoints = @json($qrPoints);
-        qrPoints.forEach(function(qr) {
-            if (qr.latitude && qr.longitude) {
-                var qrPopupHtml = `
-                    <div style="width: 210px; font-family: 'Inter', sans-serif;">
-                        <span style="font-size: 10px; font-weight: 700; color: #fff; background: #1a9120; padding: 2px 8px; border-radius: 4px;">PLANG BAMBU QR</span>
-                        <h4 style="font-size: 14px; font-weight: 700; margin: 8px 0 4px; color: #07370a; font-family: 'DM Sans', sans-serif;">${qr.location_name}</h4>
-                        <p style="font-size: 11.5px; color: #626f62; margin-bottom: 8px; line-height: 1.4;">${qr.cleaning_guide || ''}</p>
-                        <a href="/qr/${qr.code}" style="display: block; width: 100%; padding: 6px; font-size: 11px; text-align: center; background: #07370a; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600;">Buka Panduan Titik</a>
-                    </div>
-                `;
-                L.marker([qr.latitude, qr.longitude]).addTo(map).bindPopup(qrPopupHtml);
-            }
-        });
     });
 </script>
 @endpush

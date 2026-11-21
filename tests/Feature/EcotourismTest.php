@@ -66,15 +66,13 @@ class EcotourismTest extends TestCase
         $this->assertEquals('pending', $report->status);
     }
 
-    public function test_qr_page_increments_scan_count(): void
+    public function test_qr_page_redirects_to_home_and_increments_scan_count(): void
     {
         $qrPoint = QrPoint::first();
         $initialScan = $qrPoint->scan_count;
 
         $response = $this->get('/qr/' . $qrPoint->code);
-        $response->assertStatus(200);
-        $response->assertSee($qrPoint->location_name);
-        $response->assertSee('Lapor Sampah di Titik Ini');
+        $response->assertRedirect(route('home'));
 
         $this->assertEquals($initialScan + 1, $qrPoint->fresh()->scan_count);
     }
@@ -100,7 +98,7 @@ class EcotourismTest extends TestCase
         $user = User::first();
         $response = $this->actingAs($user)->get('/admin/qr-print');
         $response->assertStatus(200);
-        $response->assertSee('Template Cetak Stiker Plang Bambu QR Code');
+        $response->assertSee('Cetak Stiker Plang QR Code Resmi');
     }
 
     public function test_kafe_cupumanik_exists(): void

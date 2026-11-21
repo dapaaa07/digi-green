@@ -29,7 +29,7 @@ Route::prefix('lapor')->name('reports.')->group(function () {
 });
 Route::get('/laporan', [ReportController::class, 'index'])->name('reports.index');
 
-Route::get('/qr/{code}', [QrController::class, 'show'])->name('qr.show');
+Route::get('/qr/{code?}', [QrController::class, 'show'])->name('qr.show');
 
 Route::prefix('kabar')->name('articles.')->group(function () {
     Route::get('/', [ArticleController::class, 'index'])->name('index');

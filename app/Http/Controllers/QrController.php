@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Destination;
 use App\Models\QrPoint;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class QrController extends Controller
 {
-    public function show(string $code): View
+    /**
+     * Seluruh pemindaian QR diarahkan langsung ke halaman depan (landing page)
+     * Desa Wisata Cupunagara.
+     */
+    public function show(?string $code = null): RedirectResponse
     {
-        $qrPoint = QrPoint::where('code', $code)->firstOrFail();
-        $qrPoint->increment('scan_count');
+        if ($code) {
+            $qrPoint = QrPoint::where('code', $code)->first();
+            if ($qrPoint) {
+                $qrPoint->increment('scan_count');
+            }
+        }
 
-        $nearbyDestinations = Destination::orderBy('order_weight')->take(3)->get();
-        $allQrPoints = QrPoint::where('is_active', true)->where('id', '!=', $qrPoint->id)->get();
-
-        return view('qr.show', compact('qrPoint', 'nearbyDestinations', 'allQrPoints'));
+        return redirect()->route('home');
     }
 }

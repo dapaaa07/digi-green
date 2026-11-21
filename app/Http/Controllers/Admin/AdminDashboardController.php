@@ -35,7 +35,7 @@ class AdminDashboardController extends Controller
 
     public function printQr(): View
     {
-        $qrPoints = QrPoint::all();
-        return view('admin.qr_print', compact('qrPoints'));
+        $landingUrl = url('/');
+        return view('admin.qr_print', compact('landingUrl'));
     }
 }
