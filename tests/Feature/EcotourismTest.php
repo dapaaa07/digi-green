@@ -93,6 +93,12 @@ class EcotourismTest extends TestCase
         $this->assertEquals($initialScan + 1, $qrPoint->fresh()->scan_count);
     }
 
+    public function test_unauthenticated_user_is_redirected_to_admin_login(): void
+    {
+        $response = $this->get('/admin');
+        $response->assertRedirect(route('admin.login'));
+    }
+
     public function test_admin_can_login_and_access_dashboard(): void
     {
         $user = User::first();

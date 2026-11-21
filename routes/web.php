@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', HomeController::class)->name('home');
+Route::get('/login', fn () => redirect()->route('admin.login'))->name('login');
 
 Route::prefix('wisata')->name('destinations.')->group(function () {
     Route::get('/', [DestinationController::class, 'index'])->name('index');
